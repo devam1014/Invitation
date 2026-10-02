@@ -1,0 +1,2155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Wedding Invitation | Armaan & Aaliya</title>
+  
+  <!-- Luxury Wedding Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Mobile-First Fluid Typography System (Scaling 360px - 480px) */
+      --font-size-label: clamp(10px, 2.6vw, 13px);
+      --font-size-body: clamp(13px, 3.4vw, 16px);
+      --font-size-support: clamp(11px, 3vw, 14px);
+      --font-size-heading: clamp(22px, 6vw, 32px);
+      --font-size-names: clamp(24px, 7vw, 38px);
+
+      /* Fluid Mobile Padding (12px on 360px to 24px on 480px+) */
+      --mobile-padding: clamp(12px, 3.5vw, 24px);
+
+      /* Unified Invitation Canvas Max-Width for Desktop (430px max) */
+      --invitation-max-width: 430px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Root document scrolling setup - Single Native Browser Scrollbar */
+    html {
+      width: 100%;
+      min-height: 100%;
+      background-color: #000;
+      -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+      width: 100%;
+      min-height: 100%;
+      background-color: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Locked state during opening overlay */
+    body.opening-locked {
+      overflow: hidden !important;
+    }
+
+    /* OPENING OVERLAY - Independent Full Viewport Experience (100vw x 100svh) */
+    .opening-section {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s ease-in-out;
+      box-sizing: border-box;
+    }
+
+    .opening-section.unmounted {
+      display: none !important;
+      pointer-events: none !important;
+    }
+
+    /* Opening Video Container - Spans 100% of the full viewport */
+    .opening-video-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Opening Video Element - Original framing, NO zoom, NO cropping, 100% natural brightness */
+    .opening-video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      opacity: 1;
+      filter: none;
+      transform: none;
+    }
+
+    /* Wax Seal interaction button - Positioned over the wax seal in the video frame */
+    .wax-seal-trigger {
+      position: absolute;
+      top: 50.4%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120px;
+      height: 120px;
+      max-width: 25vw;
+      max-height: 25vh;
+      border-radius: 50%;
+      cursor: pointer;
+      z-index: 10;
+      background: transparent;
+      border: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+    }
+
+    .wax-seal-trigger.disabled {
+      pointer-events: none !important;
+      cursor: default !important;
+    }
+
+    /* DESKTOP OUTER APP SHELL - Centers the portrait invitation shell */
+    .invitation-app {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      background-color: #000;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* SINGLE SHARED PORTRAIT INVITATION CONTAINER - Enforces 100% identical horizontal boundaries */
+    .invitation-container {
+      position: relative;
+      width: 100%;
+      max-width: var(--invitation-max-width);
+      margin: 0 auto;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    /* MAIN HERO SECTION (Reference Width) */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      height: 100svh;
+      min-height: 100vh;
+      min-height: 100svh;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Layer 1: Background Video (Fills 100% width & height of shared container) */
+    .hero-bg-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 1;
+      filter: none;
+      transform: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Layer 2: Transparent Readability Layer */
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Layer 3: Hero Content Container */
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: #ffffff;
+      padding: var(--mobile-padding);
+    }
+
+    /* Layer 4: UI / Decorations Layer */
+    .hero-decorations {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    /* SECTION: INVITATION CARD SECTION (Dedicated Normal Document Flow with invitation.png) */
+    .invitation-card-section {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #fff9f3;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .invitation-card-artwork-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .invitation-card-artwork-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    /* Dedicated Content Layer Above Artwork (Empty for now) */
+    .invitation-card-content-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* SECTION: BRIDE & GROOM SECTION (Dedicated Normal Document Flow) */
+    .couple-section {
+      position: relative;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #fff9f3;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .couple-artwork-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto;
+    }
+
+    .couple-artwork-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    /* Proportional Frame Overlays Anchored to Inner Gold Frame Openings */
+    .couple-frame-overlay {
+      position: absolute;
+      top: 23.65%;
+      width: 27.4%;
+      height: 45.4%;
+      overflow: hidden;
+      border-radius: clamp(4px, 1.5vw, 10px);
+      box-sizing: border-box;
+      z-index: 5;
+    }
+
+    .couple-frame-overlay.clickable-photo {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .couple-frame-overlay.clickable-photo:hover .frame-photo {
+      transform: scale(1.04);
+      transition: transform 0.3s ease;
+    }
+
+    .couple-frame-overlay.frame-left {
+      left: 16%;
+    }
+
+    .couple-frame-overlay.frame-right {
+      left: 56.6%;
+    }
+
+    .frame-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    /* MAIN FLORAL INVITATION AREA (Natural Stacked Sections Height) */
+    .invitation-content-area {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      background-image: url('/images/final-background.png');
+      background-size: 100% auto;
+      background-repeat: repeat-y;
+      background-position: top center;
+      background-color: #fff9f3;
+      margin: 0 auto;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* SECTION 4: COMPACT DATE SECTION WITH SCRATCH-TO-REVEAL (Immediately before Events) */
+    .date-section {
+      position: relative;
+      width: 100%;
+      padding: clamp(24px, 5vw, 36px) var(--mobile-padding) clamp(24px, 5vw, 36px) var(--mobile-padding);
+      background: transparent;
+      box-sizing: border-box;
+    }
+
+    .date-container {
+      position: relative;
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .date-header {
+      margin-bottom: clamp(12px, 3vw, 16px);
+    }
+
+    .date-title {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-size: var(--font-size-heading);
+      font-weight: 600;
+      letter-spacing: clamp(2px, 0.8vw, 3.5px);
+      color: #8c6a2d;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      line-height: 1.1;
+    }
+
+    .date-instruction {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(12px, 3.2vw, 14px);
+      font-weight: 500;
+      color: #7a6350;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    .instruction-sub {
+      font-style: italic;
+      color: #8c6a2d;
+    }
+
+    /* Scratch Card Wrapper (Contains Date Card + Canvas Overlay) */
+    .scratch-card-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      height: 90px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(140, 106, 45, 0.15);
+      border: 1px solid rgba(200, 169, 98, 0.5);
+      box-sizing: border-box;
+    }
+
+    /* Revealed Date Card Layer (Underneath Canvas) */
+    .revealed-date-card {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(253, 250, 246, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 8px 16px;
+      box-sizing: border-box;
+      z-index: 1;
+    }
+
+    .date-card-border {
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(200, 169, 98, 0.4);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .date-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      z-index: 2;
+    }
+
+    .date-val {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(22px, 5.5vw, 28px);
+      font-weight: 700;
+      color: #8c6a2d;
+      line-height: 1;
+      letter-spacing: 0.5px;
+    }
+
+    .date-lbl {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(9px, 2.4vw, 11px);
+      font-weight: 600;
+      color: #5a4636;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .date-col-divider {
+      width: 1px;
+      height: 60%;
+      background: linear-gradient(180deg, transparent, rgba(200, 169, 98, 0.6), transparent);
+    }
+
+    /* Interactive Scratch Canvas Surface */
+    .scratch-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      cursor: pointer;
+      touch-action: none;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      outline: none;
+    }
+
+    .scratch-canvas.revealed-canvas {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    /* SECTION 5: EVENTS SECTION (Immediately after Date) */
+    .events-section {
+      position: relative;
+      width: 100%;
+      padding: clamp(24px, 6vw, 40px) var(--mobile-padding) clamp(30px, 7vw, 45px) var(--mobile-padding);
+      background: transparent;
+      box-sizing: border-box;
+    }
+
+    .events-header {
+      text-align: center;
+      margin-bottom: clamp(16px, 4vw, 24px);
+    }
+
+    .events-title {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-size: var(--font-size-heading);
+      font-weight: 600;
+      letter-spacing: clamp(2px, 0.8vw, 3.5px);
+      color: #8c6a2d;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .events-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: var(--font-size-support);
+      font-style: italic;
+      font-weight: 500;
+      color: #5a4636;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .events-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+      width: clamp(90px, 25vw, 120px);
+    }
+
+    /* Core Artwork Wrapper Container */
+    .events-artwork-wrapper {
+      position: relative;
+      width: 100%;
+      max-width: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .events-artwork-image {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    /* Interactive Tap Hotspots Container (+10px right shift) */
+    .events-hotspots-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    .event-tap-hotspot {
+      position: absolute;
+      width: 38%;
+      height: 16%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .event-tap-hotspot.hotspot-left {
+      left: calc(5.5% + 10px);
+    }
+
+    .event-tap-hotspot.hotspot-right {
+      right: calc(5.5% - 10px);
+    }
+
+    .event-tap-hotspot:focus-visible {
+      box-shadow: 0 0 0 2px #c8a962;
+    }
+
+    /* Details Cards Container (+10px right shift, Event 4 UP at 84.5%) */
+    .events-details-container {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 15;
+    }
+
+    /* Premium Luxury Empty Details Card (Shifted +10px RIGHT, Exact Y Center Match) */
+    .event-details-card {
+      position: absolute;
+      width: 38%;
+      max-width: 38%;
+      height: 16%;
+      max-height: 16%;
+      transform: translateY(-50%);
+      padding: 0;
+      background: rgba(251, 247, 240, 0.95);
+      border: 1px solid #c8a962;
+      border-radius: 8px;
+      box-shadow: 0 3px 12px rgba(140, 106, 45, 0.1);
+      backdrop-filter: blur(4px);
+      box-sizing: border-box;
+      pointer-events: auto;
+      overflow: hidden;
+      
+      /* Hidden initially */
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease-out, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+    }
+
+    /* Positioning Details Cards on the OPPOSITE side (+10px shifted right) */
+    .event-details-card.details-opposite-right {
+      right: calc(2.5% - 10px);
+      transform: translate(10px, -50%);
+    }
+
+    .event-details-card.details-opposite-left {
+      left: calc(2.5% + 10px);
+      transform: translate(-10px, -50%);
+    }
+
+    /* Active Visible Details Card state (Exact same Y center) */
+    .event-details-card.visible-details {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .event-details-card.details-opposite-right.visible-details {
+      transform: translate(0, -50%);
+    }
+
+    .event-details-card.details-opposite-left.visible-details {
+      transform: translate(0, -50%);
+    }
+
+    .details-hairline-border {
+      position: absolute;
+      inset: 3px;
+      border: 1px solid rgba(200, 169, 98, 0.4);
+      pointer-events: none;
+      border-radius: 6px;
+    }
+
+    /* SECTION 6: GALLERY SECTION (Immediately after Events, 90% Collage Width) */
+    .gallery-section {
+      position: relative;
+      width: 100%;
+      padding: clamp(40px, 10vw, 70px) var(--mobile-padding) clamp(40px, 10vw, 60px) var(--mobile-padding);
+      background: transparent;
+      box-sizing: border-box;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: clamp(24px, 6vw, 36px);
+    }
+
+    .gallery-title {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-size: var(--font-size-heading);
+      font-weight: 600;
+      letter-spacing: clamp(2px, 0.8vw, 3.5px);
+      color: #8c6a2d;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .gallery-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: var(--font-size-support);
+      font-style: italic;
+      font-weight: 500;
+      color: #5a4636;
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+
+    .gallery-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+      width: clamp(90px, 25vw, 120px);
+    }
+
+    /* Main Gallery Image Container (Exactly 90% Width, Centered) */
+    .gallery-collage-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 6px;
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+      box-sizing: border-box;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(140, 106, 45, 0.12);
+      border: 1px solid rgba(200, 169, 98, 0.3);
+      background: #fdfaf6;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(140, 106, 45, 0.2);
+    }
+
+    .gallery-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-item:hover .gallery-photo {
+      transform: scale(1.03);
+    }
+
+    /* Grid Span Classes */
+    .gallery-item.col-span-12 { grid-column: span 12; }
+    .gallery-item.col-span-7  { grid-column: span 7; }
+    .gallery-item.col-span-6  { grid-column: span 6; }
+    .gallery-item.col-span-5  { grid-column: span 5; }
+
+    /* Intelligent Aspect-Height Classes */
+    .gallery-item.height-panoramic       { height: clamp(140px, 36vw, 170px); }
+    .gallery-item.height-widescreen      { height: clamp(160px, 44vw, 210px); }
+    .gallery-item.height-tall-portrait   { height: clamp(200px, 55vw, 260px); }
+    .gallery-item.height-medium-portrait { height: clamp(150px, 40vw, 190px); }
+    .gallery-item.height-medium-landscape{ height: clamp(150px, 40vw, 190px); }
+
+    /* SECTION 7: COMPACT VENUE / ADDRESS SECTION (Front address.png & Back full-address.png) */
+    .venue-section {
+      position: relative;
+      width: 100%;
+      padding: clamp(24px, 5vw, 36px) var(--mobile-padding) 0 var(--mobile-padding);
+      background: transparent;
+      box-sizing: border-box;
+    }
+
+    .venue-container {
+      position: relative;
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .venue-header {
+      margin-bottom: clamp(12px, 3vw, 16px);
+    }
+
+    .venue-title {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-size: var(--font-size-heading);
+      font-weight: 600;
+      letter-spacing: clamp(2px, 0.8vw, 3.5px);
+      color: #8c6a2d;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+      line-height: 1.1;
+    }
+
+    .venue-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 0 auto;
+      width: clamp(80px, 22vw, 110px);
+    }
+
+    /* 3D Flip Card Perspective Container */
+    .venue-card-perspective {
+      perspective: 1000px;
+      -webkit-perspective: 1000px;
+      width: 100%;
+      max-width: 340px;
+      height: 191px;
+      margin: 0 auto;
+      box-sizing: border-box;
+    }
+
+    /* Inner 3D Rotatable Shell */
+    .venue-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      -webkit-transform-style: preserve-3d;
+      transition: transform 0.65s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+
+    .venue-card-inner.flipped {
+      transform: rotateY(180deg);
+    }
+
+    /* Both Front & Back Card Faces (Identical Footprint with artwork background) */
+    .venue-card-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 10px;
+      background-size: 100% 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      box-shadow: 0 4px 16px rgba(140, 106, 45, 0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      box-sizing: border-box;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .venue-card-front {
+      transform: rotateY(0deg);
+      z-index: 2;
+      background-image: url('/images/address.png');
+    }
+
+    .venue-card-back {
+      transform: rotateY(180deg);
+      z-index: 1;
+      background-image: url('/images/full-address.png');
+    }
+
+    .venue-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(15px, 4vw, 18px);
+      font-weight: 700;
+      color: #8c6a2d;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .venue-address-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(12px, 3vw, 14px);
+      font-weight: 500;
+      color: #5a4636;
+      line-height: 1.35;
+      margin-bottom: 12px;
+    }
+
+    .venue-full-lines {
+      margin-bottom: 10px;
+    }
+
+    .venue-address-line {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(11px, 2.8vw, 13px);
+      font-weight: 500;
+      color: #5a4636;
+      line-height: 1.35;
+      margin-bottom: 2px;
+    }
+
+    .venue-toggle-btn {
+      display: inline-block;
+      padding: 8px 18px;
+      min-height: 38px;
+      background: linear-gradient(135deg, #c8a962, #9e7934);
+      color: #ffffff;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(10px, 2.6vw, 12px);
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(140, 106, 45, 0.25);
+      transition: background 0.25s ease, transform 0.2s ease;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .venue-toggle-btn:hover {
+      background: linear-gradient(135deg, #d4b670, #a9833c);
+      transform: translateY(-1px);
+    }
+
+    /* SECTION 8: VENUE ADDITION IMAGE SECTION (Seamlessly attached 0px below Address Card) */
+    .venue-addition-section {
+      position: relative;
+      width: 100%;
+      padding: 0 var(--mobile-padding) clamp(24px, 5vw, 36px) var(--mobile-padding);
+      background: transparent;
+      box-sizing: border-box;
+    }
+
+    .venue-addition-container {
+      position: relative;
+      width: 100%;
+      margin: 0 auto;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .venue-addition-image {
+      width: 90%;
+      max-width: 340px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      border-radius: 0;
+      box-shadow: none;
+      object-fit: contain;
+      pointer-events: none;
+      -webkit-mask-image: radial-gradient(ellipse 94% 92% at center, rgba(0, 0, 0, 1) 72%, rgba(0, 0, 0, 0) 99%);
+      mask-image: radial-gradient(ellipse 94% 92% at center, rgba(0, 0, 0, 1) 72%, rgba(0, 0, 0, 0) 99%);
+    }
+
+    /* SECTION 9: COMPACT COUNTDOWN SECTION (Immediately after Venue Addition) */
+    .countdown-section {
+      position: relative;
+      width: 100%;
+      padding: clamp(24px, 5vw, 36px) var(--mobile-padding) clamp(32px, 7vw, 48px) var(--mobile-padding);
+      background: transparent;
+      box-sizing: border-box;
+    }
+
+    .countdown-container {
+      position: relative;
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .countdown-header {
+      margin-bottom: clamp(12px, 3vw, 16px);
+    }
+
+    .countdown-title {
+      font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      font-size: var(--font-size-heading);
+      font-weight: 600;
+      letter-spacing: clamp(2px, 0.8vw, 3.5px);
+      color: #8c6a2d;
+      text-transform: uppercase;
+      margin-bottom: 2px;
+      line-height: 1.1;
+    }
+
+    .countdown-subtitle {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(12px, 3.2vw, 14px);
+      font-weight: 500;
+      color: #7a6350;
+      line-height: 1.3;
+      margin: 0;
+    }
+
+    /* Single Compact Card Container (Exact Date Card Height/Weight) */
+    .countdown-card {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      height: 90px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(140, 106, 45, 0.15);
+      border: 1px solid rgba(200, 169, 98, 0.5);
+      background: rgba(253, 250, 246, 0.96);
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .countdown-card-border {
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(200, 169, 98, 0.4);
+      border-radius: 6px;
+      pointer-events: none;
+    }
+
+    .countdown-active-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 8px 12px;
+      box-sizing: border-box;
+      z-index: 2;
+    }
+
+    .countdown-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      z-index: 2;
+    }
+
+    .countdown-val {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(20px, 5.2vw, 26px);
+      font-weight: 700;
+      color: #8c6a2d;
+      line-height: 1;
+      letter-spacing: 0.5px;
+    }
+
+    .countdown-lbl {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(8px, 2.2vw, 10px);
+      font-weight: 600;
+      color: #5a4636;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .countdown-col-divider {
+      width: 1px;
+      height: 55%;
+      background: linear-gradient(180deg, transparent, rgba(200, 169, 98, 0.6), transparent);
+    }
+
+    /* WE ARE MARRIED Layer */
+    .countdown-married-layer {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      box-sizing: border-box;
+      z-index: 3;
+    }
+
+    .married-diamonds {
+      font-size: 10px;
+      color: #c8a962;
+      letter-spacing: 3px;
+      line-height: 1;
+      margin: 2px 0;
+    }
+
+    .married-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(16px, 4.2vw, 20px);
+      font-weight: 700;
+      color: #8c6a2d;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin: 2px 0;
+    }
+
+    .married-sub {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(11px, 2.8vw, 13px);
+      font-style: italic;
+      color: #5a4636;
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    /* SECTION 10: FINAL INVITATION MESSAGE SECTION (Immediately after Countdown) */
+    .final-message-section {
+      position: relative;
+      width: 100%;
+      padding: clamp(24px, 5vw, 36px) var(--mobile-padding) clamp(40px, 8vw, 60px) var(--mobile-padding);
+      background: transparent;
+      box-sizing: border-box;
+    }
+
+    .final-message-container {
+      position: relative;
+      width: 90%;
+      margin: 0 auto;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    /* Final Message Card Container (Aspect Ratio aligned with last-msg.png) */
+    .final-message-card {
+      position: relative;
+      width: 100%;
+      max-width: 340px;
+      height: 191px;
+      margin: 0 auto;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(140, 106, 45, 0.15);
+      background-image: url('/images/last-msg.png');
+      background-size: 100% 100%;
+      background-position: center center;
+      background-repeat: no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 20px;
+      box-sizing: border-box;
+    }
+
+    .final-message-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+      pointer-events: auto;
+    }
+
+    /* Shared Viewport-Level Lightbox Modal (Gallery + Bride & Groom) */
+    .gallery-lightbox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100svh;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 999999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .gallery-lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      color: #ffffff;
+      font-size: 26px;
+      font-family: Arial, sans-serif;
+      line-height: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 1000000;
+      outline: none;
+      transition: background 0.2s ease, transform 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, 0.35);
+      transform: scale(1.05);
+    }
+
+    .lightbox-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      max-width: 90vw;
+      max-height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+    }
+
+    .lightbox-image {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 6px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+      display: block;
+      pointer-events: auto;
+    }
+
+    /* Scroll-reveal animations */
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-on-scroll.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-on-scroll {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="opening-locked">
+
+  <!-- OPENING OVERLAY EXPERIENCE (Independent Full Viewport Layer) -->
+  <div id="openingSection" class="opening-section">
+    <div class="opening-video-container">
+      <video
+        id="openingVideo"
+        class="opening-video"
+        src="/videos/opening.mp4"
+        preload="auto"
+        playsinline
+        webkit-playsinline
+      ></video>
+      <button 
+        id="waxSealTrigger" 
+        class="wax-seal-trigger" 
+        aria-label="Wax Seal Trigger"
+        type="button"
+      ></button>
+    </div>
+  </div>
+
+  <!-- DESKTOP OUTER APP SHELL -->
+  <div class="invitation-app">
+    <!-- SINGLE SHARED PORTRAIT INVITATION CONTAINER -->
+    <div class="invitation-container" id="invitationContainer">
+      
+      <!-- HERO SECTION (Reference Width) -->
+      <section id="heroSection" class="hero-section" aria-label="Main Hero">
+        <!-- Layer 1: Background Video -->
+        <video
+          id="heroVideo"
+          class="hero-bg-video"
+          src="/videos/background.mp4"
+          preload="auto"
+          loop
+          muted
+          playsinline
+          webkit-playsinline
+        ></video>
+
+        <!-- Layer 2: Overlay / Readability Layer -->
+        <div class="hero-overlay"></div>
+
+        <!-- Layer 3: Hero Content -->
+        <div class="hero-content"></div>
+
+        <!-- Layer 4: UI / Decorations Layer -->
+        <div class="hero-decorations"></div>
+      </section>
+
+      <!-- SECTION 2: INVITATION CARD SECTION (Immediately after Hero) -->
+      <section id="invitationCardSection" class="invitation-card-section reveal-on-scroll" aria-label="Invitation Card">
+        <div class="invitation-card-artwork-wrapper" id="invitationCardArtworkWrapper">
+          <!-- Core Background Artwork Image -->
+          <img
+            src="/images/invitation.png"
+            alt="Invitation Background Artwork"
+            class="invitation-card-artwork-image"
+            loading="lazy"
+          />
+
+          <!-- Content Layer Above Artwork (Empty for now) -->
+          <div class="invitation-card-content-layer" id="invitationCardContentLayer">
+            <!-- Future invitation content will be placed here -->
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: BRIDE & GROOM SECTION (Clickable Naruto & Hinata Frame Overlays) -->
+      <section id="coupleSection" class="couple-section reveal-on-scroll" aria-label="The Couple">
+        <div class="couple-artwork-wrapper" id="coupleArtworkWrapper">
+          <!-- Core Background Artwork Image -->
+          <img
+            src="/images/groom-bride.jpeg"
+            alt="Bride & Groom Artwork"
+            class="couple-artwork-image"
+            loading="lazy"
+          />
+
+          <!-- Left Portrait Frame Overlay (Naruto - Groom, Clickable) -->
+          <div 
+            class="couple-frame-overlay frame-left clickable-photo"
+            data-src="/images/naruto.jpg"
+            data-alt="Naruto - Groom"
+            role="button"
+            tabindex="0"
+            aria-label="View photo: Naruto - Groom"
+          >
+            <img
+              src="/images/naruto.jpg"
+              alt="Naruto - Groom"
+              class="frame-photo"
+              loading="lazy"
+            />
+          </div>
+
+          <!-- Right Portrait Frame Overlay (Hinata - Bride, Clickable) -->
+          <div 
+            class="couple-frame-overlay frame-right clickable-photo"
+            data-src="/images/hinata.jpg"
+            data-alt="Hinata - Bride"
+            role="button"
+            tabindex="0"
+            aria-label="View photo: Hinata - Bride"
+          >
+            <img
+              src="/images/hinata.jpg"
+              alt="Hinata - Bride"
+              class="frame-photo"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- MAIN INVITATION CONTENT AREA (Date + Events + Gallery + Venue + Venue Addition + Countdown + Final Message) -->
+      <main id="invitationContentArea" class="invitation-content-area">
+        
+        <!-- SECTION 4: COMPACT DATE SECTION WITH SCRATCH-TO-REVEAL (Immediately before Events) -->
+        <section id="dateSection" class="date-section reveal-on-scroll" aria-label="Wedding Date Section">
+          <div class="date-container">
+            
+            <!-- Compact Header -->
+            <div class="date-header">
+              <h2 class="date-title">THE DATE</h2>
+              <p class="date-instruction">✦ Scratch to reveal ✦<br><span class="instruction-sub">the date</span></p>
+            </div>
+
+            <!-- Scratch Card Wrapper (Contains Date Card + Canvas Overlay) -->
+            <div class="scratch-card-wrapper" id="scratchCardWrapper">
+              
+              <!-- Revealed Date Card Layer (Underneath Canvas) -->
+              <div class="revealed-date-card" id="revealedDateCard" aria-hidden="true">
+                <div class="date-card-border" aria-hidden="true"></div>
+                <div class="date-col">
+                  <span class="date-val">13</span>
+                  <span class="date-lbl">DAY</span>
+                </div>
+                <div class="date-col-divider"></div>
+                <div class="date-col">
+                  <span class="date-val">DEC</span>
+                  <span class="date-lbl">MONTH</span>
+                </div>
+                <div class="date-col-divider"></div>
+                <div class="date-col">
+                  <span class="date-val">2026</span>
+                  <span class="date-lbl">YEAR</span>
+                </div>
+              </div>
+
+              <!-- Interactive Scratch Canvas Overlay -->
+              <canvas 
+                id="scratchCanvas" 
+                class="scratch-canvas" 
+                role="button" 
+                tabindex="0" 
+                aria-label="Scratch or press enter to reveal the wedding date"
+              ></canvas>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 5: EVENTS SECTION (Immediately after Date) -->
+        <section id="eventsSection" class="events-section reveal-on-scroll" aria-label="Our Celebrations">
+          <div class="events-header">
+            <h2 class="events-title">OUR CELEBRATIONS</h2>
+            <p class="events-subtitle">&ldquo;A collection of beautiful moments leading to our forever.&rdquo;</p>
+            <div class="events-divider">
+              <span class="divider-line"></span>
+              <span class="divider-diamond">✦</span>
+              <span class="divider-line"></span>
+            </div>
+          </div>
+
+          <div class="events-artwork-wrapper" id="eventsArtworkWrapper">
+            <img
+              src="/images/event-card.png"
+              alt="Our Celebrations Artwork"
+              class="events-artwork-image"
+              loading="lazy"
+            />
+
+            <!-- Tap Hotspots overlaying event-card.png frames (+10px right shift) -->
+            <div class="events-hotspots-container">
+              <div class="event-tap-hotspot hotspot-1 hotspot-left" data-event-id="1" style="top: 18.5%;" role="button" tabindex="0" aria-label="Toggle details for Mehndi"></div>
+              <div class="event-tap-hotspot hotspot-2 hotspot-right" data-event-id="2" style="top: 41.5%;" role="button" tabindex="0" aria-label="Toggle details for Nikah"></div>
+              <div class="event-tap-hotspot hotspot-3 hotspot-left" data-event-id="3" style="top: 64.5%;" role="button" tabindex="0" aria-label="Toggle details for Reception"></div>
+              <div class="event-tap-hotspot hotspot-4 hotspot-right" data-event-id="4" style="top: 84.5%;" role="button" tabindex="0" aria-label="Toggle details for Walima"></div>
+            </div>
+
+            <!-- Opposite Details Cards Container (EMPTY CARDS, Event 4 UP at 84.5%) -->
+            <div class="events-details-container">
+              <!-- Event 1 (LEFT) -> Empty Details Card 1 (RIGHT) -->
+              <div id="eventDetailsCard-1" class="event-details-card details-opposite-right" style="top: 18.5%;" data-details-id="1" aria-hidden="true">
+                <div class="details-hairline-border" aria-hidden="true"></div>
+              </div>
+
+              <!-- Event 2 (RIGHT) -> Empty Details Card 2 (LEFT) -->
+              <div id="eventDetailsCard-2" class="event-details-card details-opposite-left" style="top: 41.5%;" data-details-id="2" aria-hidden="true">
+                <div class="details-hairline-border" aria-hidden="true"></div>
+              </div>
+
+              <!-- Event 3 (LEFT) -> Empty Details Card 3 (RIGHT) -->
+              <div id="eventDetailsCard-3" class="event-details-card details-opposite-right" style="top: 64.5%;" data-details-id="3" aria-hidden="true">
+                <div class="details-hairline-border" aria-hidden="true"></div>
+              </div>
+
+              <!-- Event 4 (RIGHT) -> Empty Details Card 4 (LEFT) -->
+              <div id="eventDetailsCard-4" class="event-details-card details-opposite-left" style="top: 84.5%;" data-details-id="4" aria-hidden="true">
+                <div class="details-hairline-border" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 6: GALLERY SECTION (Immediately after Events, 90% Collage Width) -->
+        <section id="gallerySection" class="gallery-section reveal-on-scroll" aria-label="Our Moments Gallery">
+          <div class="gallery-header">
+            <h2 class="gallery-title">OUR MOMENTS</h2>
+            <p class="gallery-subtitle">&ldquo;A glimpse into the moments we'll cherish forever.&rdquo;</p>
+            <div class="gallery-divider">
+              <span class="divider-line"></span>
+              <span class="divider-diamond">✦</span>
+              <span class="divider-line"></span>
+            </div>
+          </div>
+
+          <!-- Curated Editorial Mosaic Collage Grid (90% Width, Centered) -->
+          <div class="gallery-collage-grid" id="galleryCollageGrid">
+            <div class="gallery-item col-span-12 height-panoramic" data-index="0" data-src="/images/1.jpg" data-alt="Gallery Moment 1" role="button" tabindex="0" aria-label="View photo: Gallery Moment 1">
+              <img src="/images/1.jpg" alt="Gallery Moment 1" class="gallery-photo" loading="lazy" />
+            </div>
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="1" data-src="/images/2.jpg" data-alt="Gallery Moment 2" role="button" tabindex="0" aria-label="View photo: Gallery Moment 2">
+              <img src="/images/2.jpg" alt="Gallery Moment 2" class="gallery-photo" loading="lazy" />
+            </div>
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="2" data-src="/images/3.jpg" data-alt="Gallery Moment 3" role="button" tabindex="0" aria-label="View photo: Gallery Moment 3">
+              <img src="/images/3.jpg" alt="Gallery Moment 3" class="gallery-photo" loading="lazy" />
+            </div>
+            <div class="gallery-item col-span-5 height-medium-portrait" data-index="3" data-src="/images/4.jpg" data-alt="Gallery Moment 4" role="button" tabindex="0" aria-label="View photo: Gallery Moment 4">
+              <img src="/images/4.jpg" alt="Gallery Moment 4" class="gallery-photo" loading="lazy" />
+            </div>
+            <div class="gallery-item col-span-7 height-medium-landscape" data-index="4" data-src="/images/8.jpg" data-alt="Gallery Moment 8" role="button" tabindex="0" aria-label="View photo: Gallery Moment 8">
+              <img src="/images/8.jpg" alt="Gallery Moment 8" class="gallery-photo" loading="lazy" />
+            </div>
+            <div class="gallery-item col-span-12 height-widescreen" data-index="5" data-src="/images/5.jpg" data-alt="Gallery Moment 5" role="button" tabindex="0" aria-label="View photo: Gallery Moment 5">
+              <img src="/images/5.jpg" alt="Gallery Moment 5" class="gallery-photo" loading="lazy" />
+            </div>
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="6" data-src="/images/6.jpg" data-alt="Gallery Moment 6" role="button" tabindex="0" aria-label="View photo: Gallery Moment 6">
+              <img src="/images/6.jpg" alt="Gallery Moment 6" class="gallery-photo" loading="lazy" />
+            </div>
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="7" data-src="/images/7.jpg" data-alt="Gallery Moment 7" role="button" tabindex="0" aria-label="View photo: Gallery Moment 7">
+              <img src="/images/7.jpg" alt="Gallery Moment 7" class="gallery-photo" loading="lazy" />
+            </div>
+          </div>
+        </section>
+
+        <!-- SECTION 7: COMPACT VENUE / ADDRESS SECTION (Front address.png & Back full-address.png) -->
+        <section id="venueSection" class="venue-section reveal-on-scroll" aria-label="The Venue">
+          <div class="venue-container">
+            
+            <!-- Compact Title -->
+            <div class="venue-header">
+              <h2 class="venue-title">THE VENUE</h2>
+              <div class="venue-divider">
+                <span class="divider-line"></span>
+                <span class="divider-diamond">✦</span>
+                <span class="divider-line"></span>
+              </div>
+            </div>
+
+            <!-- 3D Flip Card Perspective Container -->
+            <div class="venue-card-perspective">
+              <div class="venue-card-inner" id="venueCardInner">
+                
+                <!-- FRONT FACE of Card (with new address.png background artwork) -->
+                <div class="venue-card-face venue-card-front">
+                  <h3 class="venue-name">THE GRAND PAVILION</h3>
+                  <p class="venue-address-text">Royal Heritage Enclave, Main Boulevard</p>
+                  <button 
+                    id="showFullAddressBtn" 
+                    class="venue-toggle-btn"
+                    type="button"
+                    aria-label="Show full venue address"
+                  >
+                    SHOW FULL ADDRESS
+                  </button>
+                </div>
+
+                <!-- BACK FACE of Card (with full-address.png background artwork) -->
+                <div class="venue-card-face venue-card-back">
+                  <h3 class="venue-name">THE GRAND PAVILION</h3>
+                  <div class="venue-full-lines">
+                    <p class="venue-address-line">Building No. 42, Royal Heritage Enclave</p>
+                    <p class="venue-address-line">Opposite Regency Club, Main Boulevard</p>
+                    <p class="venue-address-line">Grand Imperial Sector, City - 400001</p>
+                  </div>
+                  <button 
+                    id="hideFullAddressBtn" 
+                    class="venue-toggle-btn"
+                    type="button"
+                    aria-label="Hide full venue address"
+                  >
+                    HIDE FULL ADDRESS
+                  </button>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 8: VENUE ADDITION IMAGE SECTION (Seamlessly attached 0px below Address Card) -->
+        <section id="venueAdditionSection" class="venue-addition-section reveal-on-scroll" aria-label="Venue Highlight">
+          <div class="venue-addition-container">
+            <img
+              src="/images/addition.png"
+              alt="Venue Location Highlight"
+              class="venue-addition-image"
+              loading="lazy"
+            />
+          </div>
+        </section>
+
+        <!-- SECTION 9: COMPACT COUNTDOWN SECTION (Immediately after Venue Addition) -->
+        <section id="countdownSection" class="countdown-section reveal-on-scroll" aria-label="Countdown Section">
+          <div class="countdown-container">
+            
+            <!-- Compact Header -->
+            <div class="countdown-header">
+              <h2 class="countdown-title">THE COUNTDOWN</h2>
+              <p class="countdown-subtitle">✦ Until our special day ✦</p>
+            </div>
+
+            <!-- Countdown Card Container -->
+            <div class="countdown-card" id="countdownCard">
+              <div class="countdown-card-border" aria-hidden="true"></div>
+
+              <!-- Dynamic Active Countdown Layer -->
+              <div class="countdown-active-layer" id="countdownActiveLayer">
+                <div class="countdown-col">
+                  <span class="countdown-val" id="countdownDays">00</span>
+                  <span class="countdown-lbl">DAYS</span>
+                </div>
+                <div class="countdown-col-divider"></div>
+                <div class="countdown-col">
+                  <span class="countdown-val" id="countdownHours">00</span>
+                  <span class="countdown-lbl">HRS</span>
+                </div>
+                <div class="countdown-col-divider"></div>
+                <div class="countdown-col">
+                  <span class="countdown-val" id="countdownMinutes">00</span>
+                  <span class="countdown-lbl">MIN</span>
+                </div>
+                <div class="countdown-col-divider"></div>
+                <div class="countdown-col">
+                  <span class="countdown-val" id="countdownSeconds">00</span>
+                  <span class="countdown-lbl">SEC</span>
+                </div>
+              </div>
+
+              <!-- Permanent "WE ARE MARRIED" Layer (Shown when target date reached) -->
+              <div class="countdown-married-layer" id="countdownMarriedLayer" style="display: none;" aria-hidden="true">
+                <div class="married-diamonds">✦ ✦ ✦</div>
+                <h3 class="married-title">WE ARE MARRIED</h3>
+                <p class="married-sub">Our forever has begun.</p>
+                <div class="married-diamonds">✦ ✦ ✦</div>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- SECTION 10: FINAL INVITATION MESSAGE SECTION (Immediately after Countdown) -->
+        <section id="finalMessageSection" class="final-message-section reveal-on-scroll" aria-label="Final Invitation Message">
+          <div class="final-message-container">
+            
+            <!-- Background Artwork Wrapper Card using last-msg.png -->
+            <div class="final-message-card">
+              
+              <!-- Content Overlay Layer (Ready for message text in next step) -->
+              <div class="final-message-content" id="finalMessageContent">
+                <!-- Message area prepared for future invitation text -->
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- TRUE VIEWPORT-LEVEL SHARED LIGHTBOX MODAL (Direct Child of Body) -->
+  <div id="galleryLightbox" class="gallery-lightbox" aria-hidden="true">
+    <button id="lightboxClose" class="lightbox-close" aria-label="Close image">&times;</button>
+    <div class="lightbox-content" id="lightboxContent">
+      <img id="lightboxImage" src="" alt="" class="lightbox-image" />
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      // 1. Disable browser scroll restoration so refresh ALWAYS starts at the top
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+
+      // Force window scroll to top immediately on fresh load
+      window.scrollTo(0, 0);
+
+      const openingSection = document.getElementById('openingSection');
+      const openingVideo = document.getElementById('openingVideo');
+      const waxSeal = document.getElementById('waxSealTrigger');
+
+      const heroVideo = document.getElementById('heroVideo');
+
+      let hasActivated = false;
+
+      // State exposed globally
+      window.websiteState = {
+        currentPhase: 'opening_paused',
+        openingStarted: false,
+        openingEnded: false,
+        heroStarted: false
+      };
+
+      // Ensure opening video is visible & paused at currentTime = 0, hero video paused
+      function initVideoStates() {
+        window.scrollTo(0, 0);
+        openingVideo.currentTime = 0;
+        openingVideo.pause();
+
+        heroVideo.currentTime = 0;
+        heroVideo.pause();
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initVideoStates);
+      } else {
+        initVideoStates();
+      }
+
+      openingVideo.addEventListener('loadedmetadata', function() {
+        if (!hasActivated) {
+          window.scrollTo(0, 0);
+          openingVideo.currentTime = 0;
+          openingVideo.pause();
+        }
+      });
+
+      // Core Wax Seal interaction handler
+      function activateOpeningVideo(e) {
+        if (e) {
+          if (e.cancelable) e.preventDefault();
+          e.stopPropagation();
+        }
+
+        if (hasActivated) return;
+        hasActivated = true;
+
+        // Disable Wax Seal interaction
+        waxSeal.classList.add('disabled');
+        waxSeal.style.pointerEvents = 'none';
+        waxSeal.setAttribute('aria-disabled', 'true');
+        
+        waxSeal.removeEventListener('click', activateOpeningVideo);
+        waxSeal.removeEventListener('pointerdown', activateOpeningVideo);
+
+        window.websiteState.currentPhase = 'opening_playing';
+        window.websiteState.openingStarted = true;
+
+        openingVideo.currentTime = 0;
+        const playPromise = openingVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(function(err) {
+            console.error('Error playing opening video:', err);
+          });
+        }
+      }
+
+      waxSeal.addEventListener('pointerdown', activateOpeningVideo, { passive: false });
+      waxSeal.addEventListener('click', activateOpeningVideo);
+
+      // Complete transition to Main Hero on actual HTML5 video ended event
+      openingVideo.addEventListener('ended', function() {
+        // 1. Stop opening video active playback
+        openingVideo.pause();
+
+        window.websiteState.currentPhase = 'hero_active';
+        window.websiteState.openingEnded = true;
+        window.websiteState.heroStarted = true;
+
+        // 2. Unlock document scrolling on HTML/BODY naturally
+        document.body.classList.remove('opening-locked');
+
+        // 3. Start hero background video from beginning (currentTime = 0)
+        heroVideo.currentTime = 0;
+        heroVideo.muted = true;
+        heroVideo.loop = true;
+        
+        const heroPlayPromise = heroVideo.play();
+        if (heroPlayPromise !== undefined) {
+          heroPlayPromise.catch(function(err) {
+            console.error('Error playing hero background video:', err);
+          });
+        }
+
+        // 4. Fade out and UNMOUNT opening section so it cannot block touch/wheel/scroll events
+        openingSection.style.opacity = '0';
+        setTimeout(function() {
+          openingSection.classList.add('unmounted');
+          openingSection.style.display = 'none';
+        }, 500);
+
+        // Dispatch CustomEvent
+        const heroActiveEvent = new CustomEvent('heroSectionActivated', {
+          detail: { heroVideo: heroVideo }
+        });
+        window.dispatchEvent(heroActiveEvent);
+        document.dispatchEvent(heroActiveEvent);
+      });
+
+      // IntersectionObserver for Scroll-Reveal Animation
+      function initScrollReveal() {
+        const revealElements = document.querySelectorAll('.reveal-on-scroll');
+        if ('IntersectionObserver' in window) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+              }
+            });
+          }, { threshold: 0.15 });
+
+          revealElements.forEach(el => observer.observe(el));
+        } else {
+          revealElements.forEach(el => el.classList.add('revealed'));
+        }
+      }
+
+      // Interactive Scratch-to-Reveal Date Handler
+      function initScratchToReveal() {
+        const wrapper = document.getElementById('scratchCardWrapper');
+        const canvas = document.getElementById('scratchCanvas');
+        const revealedCard = document.getElementById('revealedDateCard');
+        if (!wrapper || !canvas || !revealedCard) return;
+
+        const ctx = canvas.getContext('2d');
+        let isScratching = false;
+        let isRevealed = false;
+
+        function setCanvasDimensions() {
+          const rect = wrapper.getBoundingClientRect();
+          canvas.width = rect.width || 320;
+          canvas.height = rect.height || 90;
+          drawScratchCover();
+        }
+
+        function drawScratchCover() {
+          const w = canvas.width;
+          const h = canvas.height;
+
+          // Luxury gold foil gradient cover
+          const grad = ctx.createLinearGradient(0, 0, w, h);
+          grad.addColorStop(0, '#f2dfa7');
+          grad.addColorStop(0.5, '#c8a962');
+          grad.addColorStop(1, '#9e7934');
+          ctx.fillStyle = grad;
+          ctx.fillRect(0, 0, w, h);
+
+          // Inner gold border line
+          ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(4, 4, w - 8, h - 8);
+
+          // Cover Text
+          ctx.fillStyle = '#ffffff';
+          ctx.font = '600 13px "Cormorant Garamond", Georgia, serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText('✦  SCRATCH TO REVEAL  ✦', w / 2, h / 2);
+        }
+
+        function scratch(e) {
+          if (isRevealed) return;
+          const rect = canvas.getBoundingClientRect();
+          let clientX, clientY;
+          if (e.touches && e.touches.length > 0) {
+            clientX = e.touches[0].clientX;
+            clientY = e.touches[0].clientY;
+          } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+          }
+
+          const x = clientX - rect.left;
+          const y = clientY - rect.top;
+
+          ctx.globalCompositeOperation = 'destination-out';
+          ctx.beginPath();
+          ctx.arc(x, y, 22, 0, Math.PI * 2);
+          ctx.fill();
+
+          checkScratchedPercentage();
+        }
+
+        function checkScratchedPercentage() {
+          if (isRevealed) return;
+          const w = canvas.width;
+          const h = canvas.height;
+          const imgData = ctx.getImageData(0, 0, w, h);
+          const pixels = imgData.data;
+          let transparentCount = 0;
+
+          // Sample 1 in every 16 pixels for fast performance
+          for (let i = 3; i < pixels.length; i += 16) {
+            if (pixels[i] === 0) {
+              transparentCount++;
+            }
+          }
+
+          const totalSampled = pixels.length / 16;
+          const ratio = transparentCount / totalSampled;
+
+          if (ratio > 0.35) {
+            revealDate();
+          }
+        }
+
+        function revealDate() {
+          if (isRevealed) return;
+          isRevealed = true;
+          canvas.classList.add('revealed-canvas');
+          revealedCard.setAttribute('aria-hidden', 'false');
+        }
+
+        // Pointer / Touch / Mouse Listeners
+        canvas.addEventListener('pointerdown', function(e) {
+          isScratching = true;
+          scratch(e);
+        });
+
+        window.addEventListener('pointermove', function(e) {
+          if (isScratching) scratch(e);
+        });
+
+        window.addEventListener('pointerup', function() {
+          isScratching = false;
+        });
+
+        // Touch event fallbacks for iOS/Android
+        canvas.addEventListener('touchstart', function(e) {
+          isScratching = true;
+          scratch(e);
+        }, { passive: true });
+
+        canvas.addEventListener('touchmove', function(e) {
+          if (isScratching) scratch(e);
+        }, { passive: true });
+
+        canvas.addEventListener('touchend', function() {
+          isScratching = false;
+        });
+
+        // Click / Keyboard Fallback (Instant Reveal)
+        canvas.addEventListener('click', function() {
+          checkScratchedPercentage();
+        });
+
+        canvas.addEventListener('keydown', function(e) {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            revealDate();
+          }
+        });
+
+        setCanvasDimensions();
+        window.addEventListener('resize', setCanvasDimensions);
+      }
+
+      // Compact Venue Interaction Handler (True 3D Card Flip in Place)
+      function initVenueInteraction() {
+        const cardInner = document.getElementById('venueCardInner');
+        const showBtn = document.getElementById('showFullAddressBtn');
+        const hideBtn = document.getElementById('hideFullAddressBtn');
+
+        if (!cardInner || !showBtn || !hideBtn) return;
+
+        showBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          cardInner.classList.add('flipped');
+        });
+
+        hideBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          cardInner.classList.remove('flipped');
+        });
+      }
+
+      // Single-Source-of-Truth Live Countdown Timer Handler
+      function initCountdownTimer() {
+        const activeLayer = document.getElementById('countdownActiveLayer');
+        const marriedLayer = document.getElementById('countdownMarriedLayer');
+        const daysEl = document.getElementById('countdownDays');
+        const hoursEl = document.getElementById('countdownHours');
+        const minutesEl = document.getElementById('countdownMinutes');
+        const secondsEl = document.getElementById('countdownSeconds');
+
+        if (!activeLayer || !marriedLayer || !daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+
+        // Target Date: December 13, 2026 20:30:00 GMT+0530 (IST)
+        const targetTimestamp = new Date('2026-12-13T20:30:00+05:30').getTime();
+
+        function updateTimer() {
+          const now = Date.now();
+          const diff = targetTimestamp - now;
+
+          if (diff <= 0) {
+            // Target Date Reached -> Permanently switch to "WE ARE MARRIED" state
+            activeLayer.style.display = 'none';
+            activeLayer.setAttribute('aria-hidden', 'true');
+            marriedLayer.style.display = 'flex';
+            marriedLayer.setAttribute('aria-hidden', 'false');
+            if (timerInterval) clearInterval(timerInterval);
+            return;
+          }
+
+          const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+          daysEl.textContent = String(days).padStart(2, '0');
+          hoursEl.textContent = String(hours).padStart(2, '0');
+          minutesEl.textContent = String(minutes).padStart(2, '0');
+          secondsEl.textContent = String(seconds).padStart(2, '0');
+        }
+
+        updateTimer();
+        const timerInterval = setInterval(updateTimer, 1000);
+      }
+
+      // Events Interaction Handler with MULTI-OPEN State Support
+      function initEventsInteraction() {
+        // Independent open state Set (allows multiple details cards open at once)
+        const openEvents = new Set();
+
+        const hotspots = document.querySelectorAll('.event-tap-hotspot');
+        const detailsCards = document.querySelectorAll('.event-details-card');
+
+        function toggleEvent(id) {
+          const targetId = parseInt(id, 10);
+
+          if (openEvents.has(targetId)) {
+            // If already open -> close ONLY this card
+            openEvents.delete(targetId);
+          } else {
+            // If closed -> open this card (KEEP ALL OTHER OPEN CARDS OPEN)
+            openEvents.add(targetId);
+          }
+
+          // Update each card state independently
+          detailsCards.forEach(card => {
+            const cardId = parseInt(card.getAttribute('data-details-id'), 10);
+            if (openEvents.has(cardId)) {
+              card.classList.add('visible-details');
+              card.setAttribute('aria-hidden', 'false');
+            } else {
+              card.classList.remove('visible-details');
+              card.setAttribute('aria-hidden', 'true');
+            }
+          });
+        }
+
+        hotspots.forEach(hs => {
+          hs.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = hs.getAttribute('data-event-id');
+            toggleEvent(id);
+          });
+
+          hs.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              const id = hs.getAttribute('data-event-id');
+              toggleEvent(id);
+            }
+          });
+        });
+      }
+
+      // Shared Viewport-Level Lightbox Modal Handler (Gallery + Bride & Groom)
+      function initSharedLightbox() {
+        const triggerElements = document.querySelectorAll('.gallery-item, .clickable-photo');
+        let lightbox = document.getElementById('galleryLightbox');
+        const lightboxImg = document.getElementById('lightboxImage');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const lightboxContent = document.getElementById('lightboxContent');
+
+        if (!lightbox || !lightboxImg || !lightboxClose) return;
+
+        // Ensure lightbox is a direct child of document.body so position: fixed is relative to browser viewport
+        if (lightbox.parentNode !== document.body) {
+          document.body.appendChild(lightbox);
+        }
+
+        function openLightbox(src, alt) {
+          lightboxImg.src = src;
+          lightboxImg.alt = alt || 'Shared Lightbox Image';
+          lightbox.classList.add('active');
+          lightbox.setAttribute('aria-hidden', 'false');
+
+          // Lock body scroll while modal is active
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+          lightbox.classList.remove('active');
+          lightbox.setAttribute('aria-hidden', 'true');
+          lightboxImg.src = '';
+          
+          // Restore body scroll
+          document.body.style.overflow = '';
+        }
+
+        triggerElements.forEach(item => {
+          item.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const src = item.getAttribute('data-src');
+            const alt = item.getAttribute('data-alt');
+            if (src) openLightbox(src, alt);
+          });
+
+          item.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              const src = item.getAttribute('data-src');
+              const alt = item.getAttribute('data-alt');
+              if (src) openLightbox(src, alt);
+            }
+          });
+        });
+
+        // Close button click
+        lightboxClose.addEventListener('click', function(e) {
+          e.stopPropagation();
+          closeLightbox();
+        });
+
+        // Prevent click on image itself from closing lightbox
+        lightboxImg.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+
+        // Backdrop click handler (clicking around image closes modal)
+        lightbox.addEventListener('click', function(e) {
+          if (e.target === lightbox || e.target === lightboxContent) {
+            closeLightbox();
+          }
+        });
+
+        // Keyboard Escape key handler
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+          initScrollReveal();
+          initScratchToReveal();
+          initVenueInteraction();
+          initCountdownTimer();
+          initEventsInteraction();
+          initSharedLightbox();
+        });
+      } else {
+        initScrollReveal();
+        initScratchToReveal();
+        initVenueInteraction();
+        initCountdownTimer();
+        initEventsInteraction();
+        initSharedLightbox();
+      }
+    })();
+  </script>
+</body>
+</html>
