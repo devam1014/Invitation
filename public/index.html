@@ -1604,6 +1604,126 @@
         object-position: center center;
       }
     }
+
+    /* ==========================================================================
+       MOBILE-ONLY RESPONSIVE ENHANCEMENTS (max-width: 767px)
+       Strictly scoped to mobile devices. Desktop/laptop remains 100% unchanged.
+       ========================================================================== */
+    @media screen and (max-width: 767px) {
+      /* 1. Section Headings (24px - 28px) */
+      .date-title,
+      .events-title,
+      .gallery-title,
+      .venue-title,
+      .countdown-title {
+        font-size: clamp(24px, 6.5vw, 28px);
+      }
+
+      /* 2. Bride & Groom Names below portraits (19px - 23px for First Name, 13px - 16px for Surname) */
+      .couple-name-first {
+        font-size: clamp(19px, 5.2vw, 23px);
+      }
+
+      .couple-name-last {
+        font-size: clamp(13px, 3.6vw, 16px);
+        margin-top: 2px;
+      }
+
+      /* 3. Hero Welcome Typography */
+      .hero-welcome-intro {
+        font-size: clamp(13.5px, 3.8vw, 15.5px);
+      }
+
+      .hero-welcome-invitation {
+        font-size: clamp(10.5px, 2.8vw, 12px);
+      }
+
+      /* 4. Invitation Card Message */
+      .invitation-message-text {
+        font-size: clamp(13.5px, 3.6vw, 16px);
+        line-height: 1.5;
+      }
+
+      /* 5. Date Section & Scratch Labels (12px - 15px) */
+      .date-instruction {
+        font-size: clamp(13px, 3.6vw, 15px);
+      }
+
+      .date-val {
+        font-size: clamp(24px, 6.2vw, 30px);
+      }
+
+      .date-val.date-val-month {
+        font-size: clamp(16px, 4.4vw, 21px);
+      }
+
+      .date-lbl {
+        font-size: clamp(11.5px, 3vw, 13.5px);
+      }
+
+      /* 6. Celebration Event Cards */
+      .events-subtitle {
+        font-size: clamp(13px, 3.4vw, 15px);
+      }
+
+      .event-frame-title {
+        font-size: clamp(11px, 2.9vw, 13.5px);
+        margin-bottom: 2px;
+      }
+
+      .event-frame-date {
+        font-size: clamp(9.5px, 2.5vw, 11.5px);
+      }
+
+      .event-card-content {
+        padding: 3px 5px;
+      }
+
+      .event-card-title {
+        font-size: clamp(11px, 2.8vw, 13px);
+        margin-bottom: 1px;
+      }
+
+      .event-card-date {
+        font-size: clamp(9.5px, 2.4vw, 11px);
+        margin-bottom: 1px;
+      }
+
+      .event-card-hijri {
+        font-size: clamp(8.5px, 2.2vw, 10px);
+        margin-bottom: 1px;
+      }
+
+      .event-card-venue {
+        font-size: clamp(9px, 2.3vw, 10.5px);
+        margin-bottom: 1px;
+      }
+
+      .event-card-schedule {
+        font-size: clamp(9px, 2.3vw, 10.5px);
+      }
+
+      /* 7. Venue & Countdown Supporting Text */
+      .venue-address-line {
+        font-size: clamp(12px, 3.2vw, 14px);
+      }
+
+      .venue-toggle-btn {
+        font-size: clamp(11px, 2.8vw, 12.5px);
+      }
+
+      .countdown-subtitle {
+        font-size: clamp(13px, 3.4vw, 15px);
+      }
+
+      .countdown-val {
+        font-size: clamp(22px, 5.8vw, 28px);
+      }
+
+      .countdown-lbl {
+        font-size: clamp(11px, 2.8vw, 13px);
+      }
+    }
   </style>
 </head>
 <body class="opening-locked">
