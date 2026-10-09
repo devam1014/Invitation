@@ -87,6 +87,7 @@
       opacity: 1;
       transition: opacity 0.5s ease-in-out;
       box-sizing: border-box;
+      cursor: pointer;
     }
 
     .opening-section.unmounted {
@@ -1735,7 +1736,9 @@
         id="openingVideo"
         class="opening-video"
         src="./videos/opening-new.mp4"
+        poster="./images/opening-poster.png"
         preload="auto"
+        muted
         playsinline
         webkit-playsinline
       ></video>
@@ -2251,6 +2254,7 @@
       let isActivating = false;
       let hasTransitioned = false;
       let playAttempts = 0;
+      let watchdogTimer = null;
 
       // State exposed globally
       window.websiteState = {
@@ -2265,6 +2269,7 @@
         window.scrollTo(0, 0);
         if (openingVideo && !hasActivated) {
           try {
+            openingVideo.muted = true;
             openingVideo.currentTime = 0;
             openingVideo.pause();
           } catch(e) {}
@@ -2273,6 +2278,7 @@
         if (heroVideo) {
           try {
             heroVideo.currentTime = 0;
+            heroVideo.muted = true;
             heroVideo.pause();
           } catch(e) {}
         }
@@ -2288,6 +2294,7 @@
         if (!hasActivated) {
           window.scrollTo(0, 0);
           try {
+            openingVideo.muted = true;
             openingVideo.currentTime = 0;
             openingVideo.pause();
           } catch(e) {}
@@ -2296,6 +2303,11 @@
 
       // Unified, resilient transition to Main Hero (guaranteed to execute strictly once)
       function triggerTransitionToHero(reason) {
+        if (watchdogTimer) {
+          clearTimeout(watchdogTimer);
+          watchdogTimer = null;
+        }
+
         if (hasTransitioned) return;
         hasTransitioned = true;
 
@@ -2343,14 +2355,17 @@
         document.dispatchEvent(heroActiveEvent);
       }
 
-      // Core Wax Seal interaction handler
+      // Core Wax Seal & Envelope interaction handler (iOS & Mobile hardened)
       function activateOpeningVideo(e) {
         if (e) {
           e.stopPropagation();
         }
 
-        if (hasActivated || isActivating) return;
+        if (hasActivated || isActivating || hasTransitioned) return;
         isActivating = true;
+
+        // Force muted = true synchronously to satisfy iOS Safari autoplay & gesture policies
+        openingVideo.muted = true;
 
         // Direct call to video.play() within user-gesture stack
         if (openingVideo.currentTime > 0.1) {
@@ -2363,14 +2378,29 @@
           hasActivated = true;
           isActivating = false;
 
-          // Disable Wax Seal interaction only after playback starts successfully
+          // Disable Wax Seal interaction after playback starts successfully
           waxSeal.classList.add('disabled');
           waxSeal.style.pointerEvents = 'none';
           waxSeal.setAttribute('aria-disabled', 'true');
           waxSeal.removeEventListener('click', activateOpeningVideo);
+          waxSeal.removeEventListener('touchend', activateOpeningVideo);
+          openingSection.removeEventListener('click', activateOpeningVideo);
+          openingSection.removeEventListener('touchend', activateOpeningVideo);
 
           window.websiteState.currentPhase = 'opening_playing';
           window.websiteState.openingStarted = true;
+
+          // Safety Watchdog Timer: opening video is 7.66s.
+          // If neither ended nor timeupdate has transitioned after 8.5s, transition automatically.
+          if (watchdogTimer) {
+            clearTimeout(watchdogTimer);
+          }
+          watchdogTimer = setTimeout(function() {
+            if (!hasTransitioned) {
+              console.warn('Watchdog safety timer triggered hero transition');
+              triggerTransitionToHero('watchdog_timeout');
+            }
+          }, 8500);
         }
 
         const playPromise = openingVideo.play();
@@ -2382,30 +2412,9 @@
             })
             .catch(function(err) {
               console.warn('Initial opening video play() rejected:', err);
-
-              // Resilient Mobile Fallback: If unmuted playback was blocked by device policy,
-              // immediately retry with muted = true
-              if (!openingVideo.muted) {
-                openingVideo.muted = true;
-                openingVideo.play()
-                  .then(function() {
-                    markActivated();
-                  })
-                  .catch(function(retryErr) {
-                    isActivating = false;
-                    playAttempts++;
-                    console.error('Muted retry play() also rejected:', retryErr);
-                    if (playAttempts >= 2) {
-                      triggerTransitionToHero('playback_recovery');
-                    }
-                  });
-              } else {
-                isActivating = false;
-                playAttempts++;
-                if (playAttempts >= 2) {
-                  triggerTransitionToHero('playback_recovery');
-                }
-              }
+              // On iOS Safari / Low Power Mode / WKWebView, if video playback fails,
+              // immediately transition to the invitation so user is NEVER locked out!
+              triggerTransitionToHero('playback_fallback');
             });
         } else {
           // Synchronous fallback for legacy environments
@@ -2413,16 +2422,28 @@
         }
       }
 
+      // Support tap on wax seal AND tap anywhere on the opening envelope
       waxSeal.addEventListener('click', activateOpeningVideo);
+      waxSeal.addEventListener('touchend', activateOpeningVideo);
+      openingSection.addEventListener('click', activateOpeningVideo);
+      openingSection.addEventListener('touchend', activateOpeningVideo);
 
       // Transition on actual HTML5 video ended event
       openingVideo.addEventListener('ended', function() {
+        if (watchdogTimer) {
+          clearTimeout(watchdogTimer);
+          watchdogTimer = null;
+        }
         triggerTransitionToHero('ended');
       });
 
       // Boundary fallback: if video reaches near-end without firing ended event
       openingVideo.addEventListener('timeupdate', function() {
         if (openingVideo.duration && openingVideo.currentTime >= (openingVideo.duration - 0.15)) {
+          if (watchdogTimer) {
+            clearTimeout(watchdogTimer);
+            watchdogTimer = null;
+          }
           triggerTransitionToHero('duration_reached');
         }
       });
@@ -2430,6 +2451,10 @@
       // Error recovery: if video fails to decode or load, transition gracefully
       openingVideo.addEventListener('error', function(err) {
         console.error('Opening video error occurred:', err);
+        if (watchdogTimer) {
+          clearTimeout(watchdogTimer);
+          watchdogTimer = null;
+        }
         setTimeout(function() {
           if (!hasTransitioned) {
             triggerTransitionToHero('video_error');
