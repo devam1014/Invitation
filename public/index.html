@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="opening-locked">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
   <title>Wedding Invitation | Armaan & Aaliya</title>
   
   <!-- Luxury Wedding Fonts -->
@@ -53,8 +53,10 @@
     }
 
     /* Locked state during opening overlay */
+    html.opening-locked,
     body.opening-locked {
       overflow: hidden !important;
+      height: 100%;
     }
 
     /* OPENING OVERLAY - Independent Full Viewport Experience (100vw x 100svh) */
@@ -90,6 +92,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     /* Opening Video Element - Original framing, NO zoom, NO cropping, 100% natural brightness */
@@ -184,6 +187,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center center;
       z-index: 1;
       pointer-events: none;
       opacity: 1;
@@ -225,6 +229,38 @@
       pointer-events: none;
     }
 
+    /* Transparent Music Play/Pause Control
+       Positioned over the existing gold play/pause button
+       already baked into the hero video. */
+    .music-toggle-btn {
+      position: absolute;
+      left: 87.2%;
+      top: 93.2%;
+      width: 46px;
+      height: 46px;
+      transform: translate(-50%, -50%);
+      padding: 0;
+      margin: 0;
+      border: none;
+      border-radius: 50%;
+      background: transparent;
+      cursor: pointer;
+      outline: none;
+      z-index: 20;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      pointer-events: auto;
+    }
+
+    .music-toggle-btn:focus-visible {
+      outline: 2px solid rgba(255, 255, 255, 0.8);
+      outline-offset: 3px;
+    }
+
+    .music-icon {
+      display: none !important;
+    }
+
     /* SECTION: INVITATION CARD SECTION (Dedicated Normal Document Flow with invitation.png) */
     .invitation-card-section {
       position: relative;
@@ -237,6 +273,10 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
+    }
+
+    .invitation-card-section.reveal-on-scroll {
+      transform: none;
     }
 
     .invitation-card-artwork-wrapper {
@@ -347,7 +387,7 @@
       position: relative;
       width: 100%;
       max-width: 100%;
-      background-image: url('/images/final-background.png');
+      background-image: url('./images/final-background.png');
       background-size: 100% auto;
       background-repeat: repeat-y;
       background-position: top center;
@@ -546,6 +586,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      overflow: hidden;
     }
 
     .events-artwork-image {
@@ -850,13 +891,13 @@
     .venue-card-front {
       transform: rotateY(0deg);
       z-index: 2;
-      background-image: url('/images/address.png');
+      background-image: url('./images/address.png');
     }
 
     .venue-card-back {
       transform: rotateY(180deg);
       z-index: 1;
-      background-image: url('/images/full-address.png');
+      background-image: url('./images/full-address.png');
     }
 
     .venue-name {
@@ -1132,7 +1173,7 @@
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 4px 16px rgba(140, 106, 45, 0.15);
-      background-image: url('/images/last-msg.png');
+      background-image: url('./images/last-msg.png');
       background-size: 100% 100%;
       background-position: center center;
       background-repeat: no-repeat;
@@ -1254,6 +1295,13 @@
         transition: none !important;
       }
     }
+
+    @media screen and (max-width: 600px) and (orientation: portrait) {
+      .opening-video {
+        object-fit: cover;
+        object-position: center center;
+      }
+    }
   </style>
 </head>
 <body class="opening-locked">
@@ -1264,7 +1312,7 @@
       <video
         id="openingVideo"
         class="opening-video"
-        src="/videos/opening.mp4"
+        src="./videos/opening-new.mp4"
         preload="auto"
         playsinline
         webkit-playsinline
@@ -1289,7 +1337,7 @@
         <video
           id="heroVideo"
           class="hero-bg-video"
-          src="/videos/background.mp4"
+          src="./videos/last-hero-done.mp4"
           preload="auto"
           loop
           muted
@@ -1304,7 +1352,25 @@
         <div class="hero-content"></div>
 
         <!-- Layer 4: UI / Decorations Layer -->
-        <div class="hero-decorations"></div>
+        <div class="hero-decorations">
+          <!-- Transparent music control positioned over the existing
+               play/pause button already visible inside the hero video. -->
+          <button
+            id="musicToggleBtn"
+            class="music-toggle-btn"
+            type="button"
+            aria-label="Play music"
+            aria-pressed="false"
+          ></button>
+
+          <!-- Add the music file later by setting src to:
+               ./audio/wedding-music.mp3 -->
+          <audio
+            id="weddingMusic"
+            preload="auto"
+            loop
+          ></audio>
+        </div>
       </section>
 
       <!-- SECTION 2: INVITATION CARD SECTION (Immediately after Hero) -->
@@ -1312,7 +1378,7 @@
         <div class="invitation-card-artwork-wrapper" id="invitationCardArtworkWrapper">
           <!-- Core Background Artwork Image -->
           <img
-            src="/images/invitation.png"
+            src="./images/invitation.png"
             alt="Invitation Background Artwork"
             class="invitation-card-artwork-image"
             loading="lazy"
@@ -1330,7 +1396,7 @@
         <div class="couple-artwork-wrapper" id="coupleArtworkWrapper">
           <!-- Core Background Artwork Image -->
           <img
-            src="/images/groom-bride.jpeg"
+            src="./images/groom-bride.jpeg"
             alt="Bride & Groom Artwork"
             class="couple-artwork-image"
             loading="lazy"
@@ -1339,14 +1405,14 @@
           <!-- Left Portrait Frame Overlay (Naruto - Groom, Clickable) -->
           <div 
             class="couple-frame-overlay frame-left clickable-photo"
-            data-src="/images/naruto.jpg"
+            data-src="./images/naruto.jpg"
             data-alt="Naruto - Groom"
             role="button"
             tabindex="0"
             aria-label="View photo: Naruto - Groom"
           >
             <img
-              src="/images/naruto.jpg"
+              src="./images/naruto.jpg"
               alt="Naruto - Groom"
               class="frame-photo"
               loading="lazy"
@@ -1356,14 +1422,14 @@
           <!-- Right Portrait Frame Overlay (Hinata - Bride, Clickable) -->
           <div 
             class="couple-frame-overlay frame-right clickable-photo"
-            data-src="/images/hinata.jpg"
+            data-src="./images/hinata.jpg"
             data-alt="Hinata - Bride"
             role="button"
             tabindex="0"
             aria-label="View photo: Hinata - Bride"
           >
             <img
-              src="/images/hinata.jpg"
+              src="./images/hinata.jpg"
               alt="Hinata - Bride"
               class="frame-photo"
               loading="lazy"
@@ -1428,14 +1494,14 @@
             <p class="events-subtitle">&ldquo;A collection of beautiful moments leading to our forever.&rdquo;</p>
             <div class="events-divider">
               <span class="divider-line"></span>
-              <span class="divider-diamond">✦</span>
+              <span class="divider-diamond"></span>
               <span class="divider-line"></span>
             </div>
           </div>
 
           <div class="events-artwork-wrapper" id="eventsArtworkWrapper">
             <img
-              src="/images/event-card.png"
+              src="./images/event-card.png"
               alt="Our Celebrations Artwork"
               class="events-artwork-image"
               loading="lazy"
@@ -1481,36 +1547,36 @@
             <p class="gallery-subtitle">&ldquo;A glimpse into the moments we'll cherish forever.&rdquo;</p>
             <div class="gallery-divider">
               <span class="divider-line"></span>
-              <span class="divider-diamond">✦</span>
+              <span class="divider-diamond"></span>
               <span class="divider-line"></span>
             </div>
           </div>
 
           <!-- Curated Editorial Mosaic Collage Grid (90% Width, Centered) -->
           <div class="gallery-collage-grid" id="galleryCollageGrid">
-            <div class="gallery-item col-span-12 height-panoramic" data-index="0" data-src="/images/1.jpg" data-alt="Gallery Moment 1" role="button" tabindex="0" aria-label="View photo: Gallery Moment 1">
-              <img src="/images/1.jpg" alt="Gallery Moment 1" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-12 height-panoramic" data-index="0" data-src="./images/1.jpg" data-alt="Gallery Moment 1" role="button" tabindex="0" aria-label="View photo: Gallery Moment 1">
+              <img src="./images/1.jpg" alt="Gallery Moment 1" class="gallery-photo" loading="lazy" />
             </div>
-            <div class="gallery-item col-span-6 height-tall-portrait" data-index="1" data-src="/images/2.jpg" data-alt="Gallery Moment 2" role="button" tabindex="0" aria-label="View photo: Gallery Moment 2">
-              <img src="/images/2.jpg" alt="Gallery Moment 2" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="1" data-src="./images/2.jpg" data-alt="Gallery Moment 2" role="button" tabindex="0" aria-label="View photo: Gallery Moment 2">
+              <img src="./images/2.jpg" alt="Gallery Moment 2" class="gallery-photo" loading="lazy" />
             </div>
-            <div class="gallery-item col-span-6 height-tall-portrait" data-index="2" data-src="/images/3.jpg" data-alt="Gallery Moment 3" role="button" tabindex="0" aria-label="View photo: Gallery Moment 3">
-              <img src="/images/3.jpg" alt="Gallery Moment 3" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="2" data-src="./images/3.jpg" data-alt="Gallery Moment 3" role="button" tabindex="0" aria-label="View photo: Gallery Moment 3">
+              <img src="./images/3.jpg" alt="Gallery Moment 3" class="gallery-photo" loading="lazy" />
             </div>
-            <div class="gallery-item col-span-5 height-medium-portrait" data-index="3" data-src="/images/4.jpg" data-alt="Gallery Moment 4" role="button" tabindex="0" aria-label="View photo: Gallery Moment 4">
-              <img src="/images/4.jpg" alt="Gallery Moment 4" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-5 height-medium-portrait" data-index="3" data-src="./images/4.jpg" data-alt="Gallery Moment 4" role="button" tabindex="0" aria-label="View photo: Gallery Moment 4">
+              <img src="./images/4.jpg" alt="Gallery Moment 4" class="gallery-photo" loading="lazy" />
             </div>
-            <div class="gallery-item col-span-7 height-medium-landscape" data-index="4" data-src="/images/8.jpg" data-alt="Gallery Moment 8" role="button" tabindex="0" aria-label="View photo: Gallery Moment 8">
-              <img src="/images/8.jpg" alt="Gallery Moment 8" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-7 height-medium-landscape" data-index="4" data-src="./images/8.jpg" data-alt="Gallery Moment 8" role="button" tabindex="0" aria-label="View photo: Gallery Moment 8">
+              <img src="./images/8.jpg" alt="Gallery Moment 8" class="gallery-photo" loading="lazy" />
             </div>
-            <div class="gallery-item col-span-12 height-widescreen" data-index="5" data-src="/images/5.jpg" data-alt="Gallery Moment 5" role="button" tabindex="0" aria-label="View photo: Gallery Moment 5">
-              <img src="/images/5.jpg" alt="Gallery Moment 5" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-12 height-widescreen" data-index="5" data-src="./images/5.jpg" data-alt="Gallery Moment 5" role="button" tabindex="0" aria-label="View photo: Gallery Moment 5">
+              <img src="./images/5.jpg" alt="Gallery Moment 5" class="gallery-photo" loading="lazy" />
             </div>
-            <div class="gallery-item col-span-6 height-tall-portrait" data-index="6" data-src="/images/6.jpg" data-alt="Gallery Moment 6" role="button" tabindex="0" aria-label="View photo: Gallery Moment 6">
-              <img src="/images/6.jpg" alt="Gallery Moment 6" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="6" data-src="./images/6.jpg" data-alt="Gallery Moment 6" role="button" tabindex="0" aria-label="View photo: Gallery Moment 6">
+              <img src="./images/6.jpg" alt="Gallery Moment 6" class="gallery-photo" loading="lazy" />
             </div>
-            <div class="gallery-item col-span-6 height-tall-portrait" data-index="7" data-src="/images/7.jpg" data-alt="Gallery Moment 7" role="button" tabindex="0" aria-label="View photo: Gallery Moment 7">
-              <img src="/images/7.jpg" alt="Gallery Moment 7" class="gallery-photo" loading="lazy" />
+            <div class="gallery-item col-span-6 height-tall-portrait" data-index="7" data-src="./images/7.jpg" data-alt="Gallery Moment 7" role="button" tabindex="0" aria-label="View photo: Gallery Moment 7">
+              <img src="./images/7.jpg" alt="Gallery Moment 7" class="gallery-photo" loading="lazy" />
             </div>
           </div>
         </section>
@@ -1524,7 +1590,7 @@
               <h2 class="venue-title">THE VENUE</h2>
               <div class="venue-divider">
                 <span class="divider-line"></span>
-                <span class="divider-diamond">✦</span>
+                <span class="divider-diamond"></span>
                 <span class="divider-line"></span>
               </div>
             </div>
@@ -1575,7 +1641,7 @@
         <section id="venueAdditionSection" class="venue-addition-section reveal-on-scroll" aria-label="Venue Highlight">
           <div class="venue-addition-container">
             <img
-              src="/images/addition.png"
+              src="./images/addition.png"
               alt="Venue Location Highlight"
               class="venue-addition-image"
               loading="lazy"
@@ -1680,6 +1746,9 @@
       const heroVideo = document.getElementById('heroVideo');
 
       let hasActivated = false;
+      let isActivating = false;
+      let hasTransitioned = false;
+      let playAttempts = 0;
 
       // State exposed globally
       window.websiteState = {
@@ -1692,11 +1761,19 @@
       // Ensure opening video is visible & paused at currentTime = 0, hero video paused
       function initVideoStates() {
         window.scrollTo(0, 0);
-        openingVideo.currentTime = 0;
-        openingVideo.pause();
+        if (openingVideo && !hasActivated) {
+          try {
+            openingVideo.currentTime = 0;
+            openingVideo.pause();
+          } catch(e) {}
+        }
 
-        heroVideo.currentTime = 0;
-        heroVideo.pause();
+        if (heroVideo) {
+          try {
+            heroVideo.currentTime = 0;
+            heroVideo.pause();
+          } catch(e) {}
+        }
       }
 
       if (document.readyState === 'loading') {
@@ -1708,81 +1785,154 @@
       openingVideo.addEventListener('loadedmetadata', function() {
         if (!hasActivated) {
           window.scrollTo(0, 0);
-          openingVideo.currentTime = 0;
-          openingVideo.pause();
+          try {
+            openingVideo.currentTime = 0;
+            openingVideo.pause();
+          } catch(e) {}
         }
       });
 
-      // Core Wax Seal interaction handler
-      function activateOpeningVideo(e) {
-        if (e) {
-          if (e.cancelable) e.preventDefault();
-          e.stopPropagation();
-        }
+      // Unified, resilient transition to Main Hero (guaranteed to execute strictly once)
+      function triggerTransitionToHero(reason) {
+        if (hasTransitioned) return;
+        hasTransitioned = true;
 
-        if (hasActivated) return;
-        hasActivated = true;
-
-        // Disable Wax Seal interaction
-        waxSeal.classList.add('disabled');
-        waxSeal.style.pointerEvents = 'none';
-        waxSeal.setAttribute('aria-disabled', 'true');
-        
-        waxSeal.removeEventListener('click', activateOpeningVideo);
-        waxSeal.removeEventListener('pointerdown', activateOpeningVideo);
-
-        window.websiteState.currentPhase = 'opening_playing';
-        window.websiteState.openingStarted = true;
-
-        openingVideo.currentTime = 0;
-        const playPromise = openingVideo.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(function(err) {
-            console.error('Error playing opening video:', err);
-          });
-        }
-      }
-
-      waxSeal.addEventListener('pointerdown', activateOpeningVideo, { passive: false });
-      waxSeal.addEventListener('click', activateOpeningVideo);
-
-      // Complete transition to Main Hero on actual HTML5 video ended event
-      openingVideo.addEventListener('ended', function() {
-        // 1. Stop opening video active playback
-        openingVideo.pause();
+        // 1. Stop opening video active playback safely
+        try {
+          openingVideo.pause();
+        } catch(e) {}
 
         window.websiteState.currentPhase = 'hero_active';
         window.websiteState.openingEnded = true;
         window.websiteState.heroStarted = true;
 
         // 2. Unlock document scrolling on HTML/BODY naturally
+        document.documentElement.classList.remove('opening-locked');
         document.body.classList.remove('opening-locked');
 
         // 3. Start hero background video from beginning (currentTime = 0)
-        heroVideo.currentTime = 0;
-        heroVideo.muted = true;
-        heroVideo.loop = true;
-        
-        const heroPlayPromise = heroVideo.play();
-        if (heroPlayPromise !== undefined) {
-          heroPlayPromise.catch(function(err) {
-            console.error('Error playing hero background video:', err);
-          });
+        if (heroVideo) {
+          heroVideo.currentTime = 0;
+          heroVideo.muted = true;
+          heroVideo.loop = true;
+          
+          const heroPlayPromise = heroVideo.play();
+          if (heroPlayPromise !== undefined && typeof heroPlayPromise.catch === 'function') {
+            heroPlayPromise.catch(function(err) {
+              console.error('Error playing hero background video:', err);
+            });
+          }
         }
 
-        // 4. Fade out and UNMOUNT opening section so it cannot block touch/wheel/scroll events
-        openingSection.style.opacity = '0';
-        setTimeout(function() {
-          openingSection.classList.add('unmounted');
-          openingSection.style.display = 'none';
-        }, 500);
+        // 4. Fade out and UNMOUNT opening section cleanly so it cannot block interactions
+        if (openingSection) {
+          openingSection.style.opacity = '0';
+          setTimeout(function() {
+            openingSection.classList.add('unmounted');
+            openingSection.style.display = 'none';
+          }, 500);
+        }
 
-        // Dispatch CustomEvent
+        // 5. Dispatch CustomEvent for layout / music control updates
         const heroActiveEvent = new CustomEvent('heroSectionActivated', {
-          detail: { heroVideo: heroVideo }
+          detail: { heroVideo: heroVideo, reason: reason || 'ended' }
         });
         window.dispatchEvent(heroActiveEvent);
         document.dispatchEvent(heroActiveEvent);
+      }
+
+      // Core Wax Seal interaction handler
+      function activateOpeningVideo(e) {
+        if (e) {
+          e.stopPropagation();
+        }
+
+        if (hasActivated || isActivating) return;
+        isActivating = true;
+
+        // Direct call to video.play() within user-gesture stack
+        if (openingVideo.currentTime > 0.1) {
+          try {
+            openingVideo.currentTime = 0;
+          } catch (e) {}
+        }
+
+        function markActivated() {
+          hasActivated = true;
+          isActivating = false;
+
+          // Disable Wax Seal interaction only after playback starts successfully
+          waxSeal.classList.add('disabled');
+          waxSeal.style.pointerEvents = 'none';
+          waxSeal.setAttribute('aria-disabled', 'true');
+          waxSeal.removeEventListener('click', activateOpeningVideo);
+
+          window.websiteState.currentPhase = 'opening_playing';
+          window.websiteState.openingStarted = true;
+        }
+
+        const playPromise = openingVideo.play();
+
+        if (playPromise !== undefined && typeof playPromise.then === 'function') {
+          playPromise
+            .then(function() {
+              markActivated();
+            })
+            .catch(function(err) {
+              console.warn('Initial opening video play() rejected:', err);
+
+              // Resilient Mobile Fallback: If unmuted playback was blocked by device policy,
+              // immediately retry with muted = true
+              if (!openingVideo.muted) {
+                openingVideo.muted = true;
+                openingVideo.play()
+                  .then(function() {
+                    markActivated();
+                  })
+                  .catch(function(retryErr) {
+                    isActivating = false;
+                    playAttempts++;
+                    console.error('Muted retry play() also rejected:', retryErr);
+                    if (playAttempts >= 2) {
+                      triggerTransitionToHero('playback_recovery');
+                    }
+                  });
+              } else {
+                isActivating = false;
+                playAttempts++;
+                if (playAttempts >= 2) {
+                  triggerTransitionToHero('playback_recovery');
+                }
+              }
+            });
+        } else {
+          // Synchronous fallback for legacy environments
+          markActivated();
+        }
+      }
+
+      waxSeal.addEventListener('click', activateOpeningVideo);
+
+      // Transition on actual HTML5 video ended event
+      openingVideo.addEventListener('ended', function() {
+        triggerTransitionToHero('ended');
+      });
+
+      // Boundary fallback: if video reaches near-end without firing ended event
+      openingVideo.addEventListener('timeupdate', function() {
+        if (openingVideo.duration && openingVideo.currentTime >= (openingVideo.duration - 0.15)) {
+          triggerTransitionToHero('duration_reached');
+        }
+      });
+
+      // Error recovery: if video fails to decode or load, transition gracefully
+      openingVideo.addEventListener('error', function(err) {
+        console.error('Opening video error occurred:', err);
+        setTimeout(function() {
+          if (!hasTransitioned) {
+            triggerTransitionToHero('video_error');
+          }
+        }, 1000);
       });
 
       // IntersectionObserver for Scroll-Reveal Animation
@@ -2132,6 +2282,112 @@
         });
       }
 
+      // Hero Music Play / Pause Control
+      function initMusicControl() {
+        const musicButton = document.getElementById('musicToggleBtn');
+        const weddingMusic = document.getElementById('weddingMusic');
+        const heroSection = document.getElementById('heroSection');
+
+        if (!musicButton || !weddingMusic) return;
+
+        let isMusicPlaying = false;
+
+        function updateMusicPosition() {
+          if (!heroSection || !musicButton) return;
+          const w = heroSection.offsetWidth;
+          const h = heroSection.offsetHeight;
+          if (!w || !h) return;
+
+          // Hero video is 1920x1080 with natural object-fit: cover
+          // Baked gold pause button center in native 1920x1080 canvas: col 1166.7, row 1006.6
+          const scale = Math.max(w / 1920, h / 1080);
+          const renderedW = 1920 * scale;
+          const renderedH = 1080 * scale;
+
+          const leftOffset = (w - renderedW) / 2;
+          const topOffset = (h - renderedH) / 2;
+
+          const btnX = leftOffset + 1166.7 * scale;
+          const btnY = topOffset + 1006.6 * scale;
+
+          // Keep button within hero bounds so it is always comfortably accessible
+          const clampedX = Math.min(Math.max(btnX, 24), w - 24);
+          const clampedY = Math.min(Math.max(btnY, 24), h - 24);
+
+          musicButton.style.left = clampedX + 'px';
+          musicButton.style.top = clampedY + 'px';
+        }
+
+        updateMusicPosition();
+        window.addEventListener('resize', updateMusicPosition);
+        window.addEventListener('orientationchange', updateMusicPosition);
+        window.addEventListener('heroSectionActivated', updateMusicPosition);
+
+        function updateMusicState() {
+          musicButton.setAttribute(
+            'aria-pressed',
+            String(isMusicPlaying)
+          );
+
+          musicButton.setAttribute(
+            'aria-label',
+            isMusicPlaying ? 'Pause music' : 'Play music'
+          );
+        }
+
+        musicButton.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Music will be added later. Until a source is supplied,
+          // the transparent control does nothing.
+          if (!weddingMusic.src) {
+            console.info(
+              'Wedding music source is not set yet.'
+            );
+            return;
+          }
+
+          if (isMusicPlaying) {
+            weddingMusic.pause();
+            isMusicPlaying = false;
+            updateMusicState();
+            return;
+          }
+
+          const playPromise = weddingMusic.play();
+
+          if (playPromise !== undefined) {
+            playPromise
+              .then(function() {
+                isMusicPlaying = true;
+                updateMusicState();
+              })
+              .catch(function(error) {
+                console.error(
+                  'Unable to play wedding music:',
+                  error
+                );
+              });
+          } else {
+            isMusicPlaying = true;
+            updateMusicState();
+          }
+        });
+
+        weddingMusic.addEventListener('pause', function() {
+          isMusicPlaying = false;
+          updateMusicState();
+        });
+
+        weddingMusic.addEventListener('play', function() {
+          isMusicPlaying = true;
+          updateMusicState();
+        });
+
+        updateMusicState();
+      }
+
       if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
           initScrollReveal();
@@ -2140,6 +2396,7 @@
           initCountdownTimer();
           initEventsInteraction();
           initSharedLightbox();
+          initMusicControl();
         });
       } else {
         initScrollReveal();
@@ -2148,8 +2405,10 @@
         initCountdownTimer();
         initEventsInteraction();
         initSharedLightbox();
+        initMusicControl();
       }
     })();
   </script>
 </body>
 </html>
+

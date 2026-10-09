@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="opening-locked">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Wedding Invitation | Zainab and Aziz</title>
-  <!-- GitHub Pages project-site safe: all local assets use relative paths. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+  <title>Wedding Invitation | Armaan & Aaliya</title>
   
   <!-- Luxury Wedding Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -54,8 +53,10 @@
     }
 
     /* Locked state during opening overlay */
+    html.opening-locked,
     body.opening-locked {
       overflow: hidden !important;
+      height: 100%;
     }
 
     /* OPENING OVERLAY - Independent Full Viewport Experience (100vw x 100svh) */
@@ -91,6 +92,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
     }
 
     /* Opening Video Element - Original framing, NO zoom, NO cropping, 100% natural brightness */
@@ -185,6 +187,7 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center center;
       z-index: 1;
       pointer-events: none;
       opacity: 1;
@@ -231,22 +234,19 @@
        already baked into the hero video. */
     .music-toggle-btn {
       position: absolute;
-      left: 75.8%;
-      top: 92.9%;
+      left: 87.2%;
+      top: 93.2%;
       width: 46px;
       height: 46px;
       transform: translate(-50%, -50%);
-
       padding: 0;
       margin: 0;
       border: none;
       border-radius: 50%;
       background: transparent;
-
       cursor: pointer;
       outline: none;
       z-index: 20;
-
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
       pointer-events: auto;
@@ -257,8 +257,6 @@
       outline-offset: 3px;
     }
 
-    /* No visible icon is drawn because the real button
-       is already part of the video artwork. */
     .music-icon {
       display: none !important;
     }
@@ -275,6 +273,10 @@
       justify-content: center;
       align-items: center;
       overflow: hidden;
+    }
+
+    .invitation-card-section.reveal-on-scroll {
+      transform: none;
     }
 
     .invitation-card-artwork-wrapper {
@@ -584,6 +586,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
+      overflow: hidden;
     }
 
     .events-artwork-image {
@@ -628,48 +631,6 @@
 
     .event-tap-hotspot:focus-visible {
       box-shadow: 0 0 0 2px #c8a962;
-    }
-
-    /* First Event "Tap to See Details" Guidance Hint */
-    .event-tap-hint {
-      position: absolute;
-      top: 18.5%;
-      left: calc(5.5% + 10px);
-      width: 38%;
-      height: 16%;
-      transform: translateY(-50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-sizing: border-box;
-
-      color: #8c6a2d;
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: clamp(10px, 2.7vw, 13px);
-      font-weight: 700;
-      letter-spacing: 1.2px;
-      text-transform: uppercase;
-      text-align: center;
-
-      background: rgba(255, 250, 242, 0.88);
-      border: 1px solid rgba(200, 169, 98, 0.7);
-      border-radius: 8px;
-      box-shadow: 0 3px 12px rgba(140, 106, 45, 0.12);
-
-      z-index: 20;
-      pointer-events: none;
-
-      opacity: 0;
-      visibility: hidden;
-
-      transition:
-        opacity 0.35s ease,
-        visibility 0.35s ease;
-    }
-
-    .event-tap-hint.show {
-      opacity: 1;
-      visibility: visible;
     }
 
     /* Details Cards Container (+10px right shift, Event 4 UP at 84.5%) */
@@ -1335,25 +1296,8 @@
       }
     }
 
-    /* MOBILE OPENING VIDEO FIX
-       Desktop behavior remains unchanged.
-       On narrow mobile screens, the opening video fills the viewport. */
-    @media screen and (max-width: 600px) {
-      .opening-section {
-        width: 100vw;
-        height: 100vh;
-        height: 100svh;
-      }
-
-      .opening-video-container {
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-      }
-
+    @media screen and (max-width: 600px) and (orientation: portrait) {
       .opening-video {
-        width: 100%;
-        height: 100%;
         object-fit: cover;
         object-position: center center;
       }
@@ -1409,7 +1353,6 @@
 
         <!-- Layer 4: UI / Decorations Layer -->
         <div class="hero-decorations">
-
           <!-- Transparent music control positioned over the existing
                play/pause button already visible inside the hero video. -->
           <button
@@ -1427,7 +1370,6 @@
             preload="auto"
             loop
           ></audio>
-
         </div>
       </section>
 
@@ -1564,11 +1506,6 @@
               class="events-artwork-image"
               loading="lazy"
             />
-
-            <!-- First Event Guidance Hint -->
-            <div id="eventTapHint" class="event-tap-hint" aria-hidden="true">
-              TAP TO SEE DETAILS
-            </div>
 
             <!-- Tap Hotspots overlaying event-card.png frames (+10px right shift) -->
             <div class="events-hotspots-container">
@@ -1809,6 +1746,9 @@
       const heroVideo = document.getElementById('heroVideo');
 
       let hasActivated = false;
+      let isActivating = false;
+      let hasTransitioned = false;
+      let playAttempts = 0;
 
       // State exposed globally
       window.websiteState = {
@@ -1821,11 +1761,19 @@
       // Ensure opening video is visible & paused at currentTime = 0, hero video paused
       function initVideoStates() {
         window.scrollTo(0, 0);
-        openingVideo.currentTime = 0;
-        openingVideo.pause();
+        if (openingVideo && !hasActivated) {
+          try {
+            openingVideo.currentTime = 0;
+            openingVideo.pause();
+          } catch(e) {}
+        }
 
-        heroVideo.currentTime = 0;
-        heroVideo.pause();
+        if (heroVideo) {
+          try {
+            heroVideo.currentTime = 0;
+            heroVideo.pause();
+          } catch(e) {}
+        }
       }
 
       if (document.readyState === 'loading') {
@@ -1837,81 +1785,154 @@
       openingVideo.addEventListener('loadedmetadata', function() {
         if (!hasActivated) {
           window.scrollTo(0, 0);
-          openingVideo.currentTime = 0;
-          openingVideo.pause();
+          try {
+            openingVideo.currentTime = 0;
+            openingVideo.pause();
+          } catch(e) {}
         }
       });
 
-      // Core Wax Seal interaction handler
-      function activateOpeningVideo(e) {
-        if (e) {
-          if (e.cancelable) e.preventDefault();
-          e.stopPropagation();
-        }
+      // Unified, resilient transition to Main Hero (guaranteed to execute strictly once)
+      function triggerTransitionToHero(reason) {
+        if (hasTransitioned) return;
+        hasTransitioned = true;
 
-        if (hasActivated) return;
-        hasActivated = true;
-
-        // Disable Wax Seal interaction
-        waxSeal.classList.add('disabled');
-        waxSeal.style.pointerEvents = 'none';
-        waxSeal.setAttribute('aria-disabled', 'true');
-        
-        waxSeal.removeEventListener('click', activateOpeningVideo);
-        waxSeal.removeEventListener('pointerdown', activateOpeningVideo);
-
-        window.websiteState.currentPhase = 'opening_playing';
-        window.websiteState.openingStarted = true;
-
-        openingVideo.currentTime = 0;
-        const playPromise = openingVideo.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(function(err) {
-            console.error('Error playing opening video:', err);
-          });
-        }
-      }
-
-      waxSeal.addEventListener('pointerdown', activateOpeningVideo, { passive: false });
-      waxSeal.addEventListener('click', activateOpeningVideo);
-
-      // Complete transition to Main Hero on actual HTML5 video ended event
-      openingVideo.addEventListener('ended', function() {
-        // 1. Stop opening video active playback
-        openingVideo.pause();
+        // 1. Stop opening video active playback safely
+        try {
+          openingVideo.pause();
+        } catch(e) {}
 
         window.websiteState.currentPhase = 'hero_active';
         window.websiteState.openingEnded = true;
         window.websiteState.heroStarted = true;
 
         // 2. Unlock document scrolling on HTML/BODY naturally
+        document.documentElement.classList.remove('opening-locked');
         document.body.classList.remove('opening-locked');
 
         // 3. Start hero background video from beginning (currentTime = 0)
-        heroVideo.currentTime = 0;
-        heroVideo.muted = true;
-        heroVideo.loop = true;
-        
-        const heroPlayPromise = heroVideo.play();
-        if (heroPlayPromise !== undefined) {
-          heroPlayPromise.catch(function(err) {
-            console.error('Error playing hero background video:', err);
-          });
+        if (heroVideo) {
+          heroVideo.currentTime = 0;
+          heroVideo.muted = true;
+          heroVideo.loop = true;
+          
+          const heroPlayPromise = heroVideo.play();
+          if (heroPlayPromise !== undefined && typeof heroPlayPromise.catch === 'function') {
+            heroPlayPromise.catch(function(err) {
+              console.error('Error playing hero background video:', err);
+            });
+          }
         }
 
-        // 4. Fade out and UNMOUNT opening section so it cannot block touch/wheel/scroll events
-        openingSection.style.opacity = '0';
-        setTimeout(function() {
-          openingSection.classList.add('unmounted');
-          openingSection.style.display = 'none';
-        }, 500);
+        // 4. Fade out and UNMOUNT opening section cleanly so it cannot block interactions
+        if (openingSection) {
+          openingSection.style.opacity = '0';
+          setTimeout(function() {
+            openingSection.classList.add('unmounted');
+            openingSection.style.display = 'none';
+          }, 500);
+        }
 
-        // Dispatch CustomEvent
+        // 5. Dispatch CustomEvent for layout / music control updates
         const heroActiveEvent = new CustomEvent('heroSectionActivated', {
-          detail: { heroVideo: heroVideo }
+          detail: { heroVideo: heroVideo, reason: reason || 'ended' }
         });
         window.dispatchEvent(heroActiveEvent);
         document.dispatchEvent(heroActiveEvent);
+      }
+
+      // Core Wax Seal interaction handler
+      function activateOpeningVideo(e) {
+        if (e) {
+          e.stopPropagation();
+        }
+
+        if (hasActivated || isActivating) return;
+        isActivating = true;
+
+        // Direct call to video.play() within user-gesture stack
+        if (openingVideo.currentTime > 0.1) {
+          try {
+            openingVideo.currentTime = 0;
+          } catch (e) {}
+        }
+
+        function markActivated() {
+          hasActivated = true;
+          isActivating = false;
+
+          // Disable Wax Seal interaction only after playback starts successfully
+          waxSeal.classList.add('disabled');
+          waxSeal.style.pointerEvents = 'none';
+          waxSeal.setAttribute('aria-disabled', 'true');
+          waxSeal.removeEventListener('click', activateOpeningVideo);
+
+          window.websiteState.currentPhase = 'opening_playing';
+          window.websiteState.openingStarted = true;
+        }
+
+        const playPromise = openingVideo.play();
+
+        if (playPromise !== undefined && typeof playPromise.then === 'function') {
+          playPromise
+            .then(function() {
+              markActivated();
+            })
+            .catch(function(err) {
+              console.warn('Initial opening video play() rejected:', err);
+
+              // Resilient Mobile Fallback: If unmuted playback was blocked by device policy,
+              // immediately retry with muted = true
+              if (!openingVideo.muted) {
+                openingVideo.muted = true;
+                openingVideo.play()
+                  .then(function() {
+                    markActivated();
+                  })
+                  .catch(function(retryErr) {
+                    isActivating = false;
+                    playAttempts++;
+                    console.error('Muted retry play() also rejected:', retryErr);
+                    if (playAttempts >= 2) {
+                      triggerTransitionToHero('playback_recovery');
+                    }
+                  });
+              } else {
+                isActivating = false;
+                playAttempts++;
+                if (playAttempts >= 2) {
+                  triggerTransitionToHero('playback_recovery');
+                }
+              }
+            });
+        } else {
+          // Synchronous fallback for legacy environments
+          markActivated();
+        }
+      }
+
+      waxSeal.addEventListener('click', activateOpeningVideo);
+
+      // Transition on actual HTML5 video ended event
+      openingVideo.addEventListener('ended', function() {
+        triggerTransitionToHero('ended');
+      });
+
+      // Boundary fallback: if video reaches near-end without firing ended event
+      openingVideo.addEventListener('timeupdate', function() {
+        if (openingVideo.duration && openingVideo.currentTime >= (openingVideo.duration - 0.15)) {
+          triggerTransitionToHero('duration_reached');
+        }
+      });
+
+      // Error recovery: if video fails to decode or load, transition gracefully
+      openingVideo.addEventListener('error', function(err) {
+        console.error('Opening video error occurred:', err);
+        setTimeout(function() {
+          if (!hasTransitioned) {
+            triggerTransitionToHero('video_error');
+          }
+        }, 1000);
       });
 
       // IntersectionObserver for Scroll-Reveal Animation
@@ -2141,93 +2162,21 @@
 
         const hotspots = document.querySelectorAll('.event-tap-hotspot');
         const detailsCards = document.querySelectorAll('.event-details-card');
-        const eventTapHint = document.getElementById('eventTapHint');
-        const eventsSection = document.getElementById('eventsSection');
-
-        let hintTimerStarted = false;
-        let hintShowTimer = null;
-        let hintHideTimer = null;
-
-        function hideEventHint() {
-          if (!eventTapHint) return;
-
-          eventTapHint.classList.remove('show');
-          eventTapHint.setAttribute('aria-hidden', 'true');
-
-          if (hintShowTimer) {
-            clearTimeout(hintShowTimer);
-            hintShowTimer = null;
-          }
-
-          if (hintHideTimer) {
-            clearTimeout(hintHideTimer);
-            hintHideTimer = null;
-          }
-        }
-
-        function startEventHintTimer() {
-          if (!eventTapHint || hintTimerStarted) return;
-
-          hintTimerStarted = true;
-
-          // Wait 3.5 seconds before showing the guidance message.
-          hintShowTimer = setTimeout(function() {
-            // Do not show it if Event 1 was already opened.
-            if (openEvents.has(1)) return;
-
-            eventTapHint.classList.add('show');
-            eventTapHint.setAttribute('aria-hidden', 'false');
-
-            // Keep the message visible for 3 seconds.
-            hintHideTimer = setTimeout(function() {
-              hideEventHint();
-            }, 3000);
-          }, 3500);
-        }
-
-        // Start the hint timer when the Events section becomes visible.
-        // This prevents the message from appearing while the user is
-        // still watching the opening/hero sections.
-        if (eventsSection && 'IntersectionObserver' in window) {
-          const hintObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-              if (entry.isIntersecting) {
-                startEventHintTimer();
-                hintObserver.disconnect();
-              }
-            });
-          }, {
-            threshold: 0.15
-          });
-
-          hintObserver.observe(eventsSection);
-        } else {
-          startEventHintTimer();
-        }
 
         function toggleEvent(id) {
           const targetId = parseInt(id, 10);
 
-          // Tapping Event 1 immediately removes the guidance message.
-          if (targetId === 1) {
-            hideEventHint();
-          }
-
           if (openEvents.has(targetId)) {
-            // If already open -> close ONLY this card.
+            // If already open -> close ONLY this card
             openEvents.delete(targetId);
           } else {
-            // If closed -> open this card and keep all other open cards open.
+            // If closed -> open this card (KEEP ALL OTHER OPEN CARDS OPEN)
             openEvents.add(targetId);
           }
 
-          // Update every card independently.
-          detailsCards.forEach(function(card) {
-            const cardId = parseInt(
-              card.getAttribute('data-details-id'),
-              10
-            );
-
+          // Update each card state independently
+          detailsCards.forEach(card => {
+            const cardId = parseInt(card.getAttribute('data-details-id'), 10);
             if (openEvents.has(cardId)) {
               card.classList.add('visible-details');
               card.setAttribute('aria-hidden', 'false');
@@ -2238,10 +2187,9 @@
           });
         }
 
-        hotspots.forEach(function(hs) {
+        hotspots.forEach(hs => {
           hs.addEventListener('click', function(e) {
             e.stopPropagation();
-
             const id = hs.getAttribute('data-event-id');
             toggleEvent(id);
           });
@@ -2249,7 +2197,6 @@
           hs.addEventListener('keydown', function(e) {
             if (e.key === 'Enter' || e.key === ' ') {
               e.preventDefault();
-
               const id = hs.getAttribute('data-event-id');
               toggleEvent(id);
             }
@@ -2339,10 +2286,42 @@
       function initMusicControl() {
         const musicButton = document.getElementById('musicToggleBtn');
         const weddingMusic = document.getElementById('weddingMusic');
+        const heroSection = document.getElementById('heroSection');
 
         if (!musicButton || !weddingMusic) return;
 
         let isMusicPlaying = false;
+
+        function updateMusicPosition() {
+          if (!heroSection || !musicButton) return;
+          const w = heroSection.offsetWidth;
+          const h = heroSection.offsetHeight;
+          if (!w || !h) return;
+
+          // Hero video is 1920x1080 with natural object-fit: cover
+          // Baked gold pause button center in native 1920x1080 canvas: col 1166.7, row 1006.6
+          const scale = Math.max(w / 1920, h / 1080);
+          const renderedW = 1920 * scale;
+          const renderedH = 1080 * scale;
+
+          const leftOffset = (w - renderedW) / 2;
+          const topOffset = (h - renderedH) / 2;
+
+          const btnX = leftOffset + 1166.7 * scale;
+          const btnY = topOffset + 1006.6 * scale;
+
+          // Keep button within hero bounds so it is always comfortably accessible
+          const clampedX = Math.min(Math.max(btnX, 24), w - 24);
+          const clampedY = Math.min(Math.max(btnY, 24), h - 24);
+
+          musicButton.style.left = clampedX + 'px';
+          musicButton.style.top = clampedY + 'px';
+        }
+
+        updateMusicPosition();
+        window.addEventListener('resize', updateMusicPosition);
+        window.addEventListener('orientationchange', updateMusicPosition);
+        window.addEventListener('heroSectionActivated', updateMusicPosition);
 
         function updateMusicState() {
           musicButton.setAttribute(
@@ -2432,3 +2411,4 @@
   </script>
 </body>
 </html>
+
