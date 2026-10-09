@@ -3,14 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
-  <title>Wedding Invitation | Armaan & Aaliya</title>
+  <title>Wedding Invitation | Aziz & Zainab</title>
   
   <!-- Luxury Wedding Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
 
   <style>
+    @font-face {
+      font-family: 'Nandola';
+      src: url('./fonts/Nandola-Regular.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
     :root {
       /* Mobile-First Fluid Typography System (Scaling 360px - 480px) */
       --font-size-label: clamp(10px, 2.6vw, 13px);
@@ -211,11 +219,65 @@
 
     /* Layer 3: Hero Content Container */
     .hero-content {
-      position: relative;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 3;
       text-align: center;
-      color: #ffffff;
       padding: var(--mobile-padding);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      pointer-events: none;
+      box-sizing: border-box;
+    }
+
+    /* Hero Welcome Message Overlay - Controlled to Safe Central Sky Area */
+    .hero-welcome-message {
+      margin-top: clamp(80px, 17vh, 135px);
+      width: 100%;
+      max-width: clamp(200px, 58vw, 250px);
+      text-align: center;
+      padding: 0 10px;
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+
+    .hero-welcome-intro {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(12px, 3.2vw, 15px);
+      font-style: italic;
+      font-weight: 500;
+      color: #5c3e1e;
+      letter-spacing: 0.8px;
+      line-height: 1.35;
+      margin-bottom: clamp(3px, 0.9vw, 6px);
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.95), 0 0 12px rgba(255, 255, 255, 0.85);
+    }
+
+    .hero-couple-names {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(30px, 7.8vw, 42px);
+      font-weight: 400;
+      color: #7c5828;
+      line-height: 1.15;
+      margin-bottom: clamp(4px, 1vw, 7px);
+      text-shadow: 0 2px 6px rgba(255, 255, 255, 0.95), 0 0 16px rgba(255, 255, 255, 0.9);
+      white-space: nowrap;
+    }
+
+    .hero-welcome-invitation {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(9px, 2.3vw, 11.5px);
+      font-weight: 600;
+      letter-spacing: clamp(1px, 0.3vw, 1.8px);
+      text-transform: uppercase;
+      color: #523a20;
+      line-height: 1.45;
+      text-shadow: 0 1px 4px rgba(255, 255, 255, 0.95), 0 0 10px rgba(255, 255, 255, 0.85);
     }
 
     /* Layer 4: UI / Decorations Layer */
@@ -299,7 +361,7 @@
       pointer-events: none;
     }
 
-    /* Dedicated Content Layer Above Artwork (Empty for now) */
+    /* Dedicated Content Layer Above Artwork */
     .invitation-card-content-layer {
       position: absolute;
       inset: 0;
@@ -307,6 +369,62 @@
       height: 100%;
       pointer-events: none;
       z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    .invitation-card-message-box {
+      width: 76%;
+      max-width: 310px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(6px, 1.4vw, 10px);
+      padding: 0 8px;
+      box-sizing: border-box;
+    }
+
+    .invitation-arabic-heading {
+      font-family: 'Amiri', 'Traditional Arabic', serif;
+      font-size: clamp(16px, 4.2vw, 22px);
+      color: #8c6a2d;
+      line-height: 1.4;
+      margin: 0;
+      letter-spacing: 0.5px;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+    }
+
+    .invitation-message-ornament {
+      color: #c8a962;
+      font-size: clamp(7px, 1.6vw, 9.5px);
+      letter-spacing: 4px;
+      opacity: 0.85;
+      line-height: 1;
+    }
+
+    .invitation-message-text {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(12.5px, 3.2vw, 16px);
+      line-height: 1.55;
+      color: #5c4328;
+      font-style: italic;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      margin: 0;
+    }
+
+    .invitation-couple-highlight {
+      font-family: 'Great Vibes', cursive;
+      font-style: normal;
+      font-size: 1.3em;
+      color: #8c6a2d;
+      font-weight: 400;
+      display: inline-block;
+      margin: 0 2px;
     }
 
     /* SECTION: BRIDE & GROOM SECTION (Dedicated Normal Document Flow) */
@@ -346,11 +464,11 @@
     /* Proportional Frame Overlays Anchored to Inner Gold Frame Openings */
     .couple-frame-overlay {
       position: absolute;
-      top: 23.65%;
-      width: 27.4%;
-      height: 45.4%;
+      top: 23.77%;
+      width: 27.2%;
+      height: 45.3%;
       overflow: hidden;
-      border-radius: clamp(4px, 1.5vw, 10px);
+      border-radius: clamp(6px, 1.8vw, 12px);
       box-sizing: border-box;
       z-index: 5;
     }
@@ -366,20 +484,81 @@
     }
 
     .couple-frame-overlay.frame-left {
-      left: 16%;
+      left: 16.0%;
     }
 
     .couple-frame-overlay.frame-right {
-      left: 56.6%;
+      left: 56.64%;
     }
 
     .frame-photo {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center center;
       display: block;
       transition: transform 0.3s ease;
+    }
+
+    /* Groom (Naruto) Photo tuning for visual balance */
+    .frame-photo-groom {
+      object-position: 65% 25%;
+      transform: scale(1.28);
+      transform-origin: 65% 25%;
+    }
+
+    .couple-frame-overlay.clickable-photo:hover .frame-photo-groom {
+      transform: scale(1.33);
+    }
+
+    /* Bride (Hinata) Photo tuning for visual balance */
+    .frame-photo-bride {
+      object-position: center 15%;
+    }
+
+    /* Couple Name Labels Below Respective Photo Frames (Two Lines in Flowing Wedding Calligraphy) */
+    .couple-name-label {
+      position: absolute;
+      top: 71.5%;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Great Vibes', 'Nandola', cursive;
+      color: #7c5828;
+      text-transform: none;
+      pointer-events: none;
+      z-index: 6;
+      line-height: 1.05;
+      transform: translateX(-50%);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+    }
+
+    .couple-name-label.name-left {
+      left: 29.6%;
+    }
+
+    .couple-name-label.name-right {
+      left: 70.24%;
+    }
+
+    .couple-name-first {
+      display: block;
+      font-family: 'Great Vibes', 'Nandola', cursive;
+      font-size: clamp(20px, 5.2vw, 26px);
+      letter-spacing: normal;
+      line-height: 1.05;
+      white-space: nowrap;
+    }
+
+    .couple-name-last {
+      display: block;
+      font-family: 'Great Vibes', 'Nandola', cursive;
+      font-size: clamp(16px, 4.2vw, 21px);
+      letter-spacing: normal;
+      line-height: 1.05;
+      margin-top: clamp(1px, 0.3vw, 2px);
+      white-space: nowrap;
     }
 
     /* MAIN FLORAL INVITATION AREA (Natural Stacked Sections Height) */
@@ -498,6 +677,11 @@
       letter-spacing: 0.5px;
     }
 
+    .date-val.date-val-month {
+      font-size: clamp(15px, 4vw, 20px);
+      letter-spacing: 0.5px;
+    }
+
     .date-lbl {
       font-family: 'Cormorant Garamond', Georgia, serif;
       font-size: clamp(9px, 2.4vw, 11px);
@@ -600,6 +784,7 @@
     }
 
     /* Interactive Tap Hotspots Container (+10px right shift) */
+    /* Tap Hotspots Container overlaying event-card.png */
     .events-hotspots-container {
       position: absolute;
       inset: 0;
@@ -611,93 +796,242 @@
 
     .event-tap-hotspot {
       position: absolute;
-      width: 38%;
-      height: 16%;
+      width: 32.5%;
+      height: 16.5%;
       transform: translateY(-50%);
       cursor: pointer;
       pointer-events: auto;
       -webkit-tap-highlight-color: transparent;
       border-radius: 8px;
       outline: none;
+      z-index: 10;
     }
 
-    .event-tap-hotspot.hotspot-left {
-      left: calc(5.5% + 10px);
+    .event-tap-hotspot.hotspot-1 {
+      left: 14.5%;
+      top: 18.75%;
     }
 
-    .event-tap-hotspot.hotspot-right {
-      right: calc(5.5% - 10px);
+    .event-tap-hotspot.hotspot-2 {
+      right: 14.0%;
+      top: 41.2%;
+    }
+
+    .event-tap-hotspot.hotspot-3 {
+      left: 14.5%;
+      top: 63.0%;
+    }
+
+    .event-tap-hotspot.hotspot-4 {
+      right: 14.0%;
+      top: 83.8%;
     }
 
     .event-tap-hotspot:focus-visible {
       box-shadow: 0 0 0 2px #c8a962;
     }
 
-    /* Details Cards Container (+10px right shift, Event 4 UP at 84.5%) */
+    /* Details Cards Container */
     .events-details-container {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 15;
+      z-index: 5;
     }
 
-    /* Premium Luxury Empty Details Card (Shifted +10px RIGHT, Exact Y Center Match) */
+    /* Premium Luxury Details Card (Closed: completely behind front card, 0 opacity) */
     .event-details-card {
       position: absolute;
-      width: 38%;
-      max-width: 38%;
-      height: 16%;
-      max-height: 16%;
-      transform: translateY(-50%);
-      padding: 0;
-      background: rgba(251, 247, 240, 0.95);
+      width: 32.5%;
+      height: 16.5%;
+      transform: translateY(-50%) translateX(0);
+      background: rgba(253, 250, 245, 0.97);
       border: 1px solid #c8a962;
       border-radius: 8px;
-      box-shadow: 0 3px 12px rgba(140, 106, 45, 0.1);
+      box-shadow: 0 3px 12px rgba(140, 106, 45, 0.12);
       backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       box-sizing: border-box;
-      pointer-events: auto;
+      pointer-events: none;
       overflow: hidden;
-      
-      /* Hidden initially */
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.35s ease-out, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s;
+      z-index: 5;
+      transition: opacity 0.4s ease-out, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s;
     }
 
-    /* Positioning Details Cards on the OPPOSITE side (+10px shifted right) */
-    .event-details-card.details-opposite-right {
-      right: calc(2.5% - 10px);
-      transform: translate(10px, -50%);
+    /* Card Initial Closed Anchors (Matches exact front card frame coordinates) */
+    #eventDetailsCard-1 {
+      left: 14.5%;
+      top: 18.75%;
     }
 
-    .event-details-card.details-opposite-left {
-      left: calc(2.5% + 10px);
-      transform: translate(-10px, -50%);
+    #eventDetailsCard-2 {
+      right: 14.0%;
+      top: 41.2%;
     }
 
-    /* Active Visible Details Card state (Exact same Y center) */
-    .event-details-card.visible-details {
+    #eventDetailsCard-3 {
+      left: 14.5%;
+      top: 63.0%;
+    }
+
+    #eventDetailsCard-4 {
+      right: 14.0%;
+      top: 83.8%;
+    }
+
+    /* Open Positions (Slide into opposite open spaces) */
+    /* Cards 1 & 3: Slide Right */
+    #eventDetailsCard-1.visible-details,
+    #eventDetailsCard-3.visible-details {
+      transform: translateY(-50%) translateX(129.2%);
       opacity: 1;
       visibility: visible;
+      z-index: 15;
+      pointer-events: auto;
     }
 
-    .event-details-card.details-opposite-right.visible-details {
-      transform: translate(0, -50%);
-    }
-
-    .event-details-card.details-opposite-left.visible-details {
-      transform: translate(0, -50%);
+    /* Cards 2 & 4: Slide Left */
+    #eventDetailsCard-2.visible-details,
+    #eventDetailsCard-4.visible-details {
+      transform: translateY(-50%) translateX(-130.8%);
+      opacity: 1;
+      visibility: visible;
+      z-index: 15;
+      pointer-events: auto;
     }
 
     .details-hairline-border {
       position: absolute;
-      inset: 3px;
+      inset: 2.5px;
       border: 1px solid rgba(200, 169, 98, 0.4);
       pointer-events: none;
       border-radius: 6px;
+    }
+
+    /* Front Card Inner Content */
+    .event-frame-inner {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4px 6px;
+      box-sizing: border-box;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .event-frame-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(9.5px, 2.3vw, 12px);
+      font-weight: 700;
+      letter-spacing: clamp(0.6px, 0.2vw, 1.4px);
+      color: #8c6a2d;
+      text-transform: uppercase;
+      line-height: 1.15;
+      margin-bottom: clamp(2px, 0.6vw, 4px);
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.85);
+    }
+
+    .event-frame-title .title-sub {
+      display: block;
+      font-size: 0.85em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 1px;
+    }
+
+    .event-frame-date {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(8px, 1.9vw, 10px);
+      font-weight: 600;
+      color: #3d2e1e;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+
+    /* Side Card Inner Content */
+    .event-card-content {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4px 6px;
+      box-sizing: border-box;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .event-card-title {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: clamp(9px, 2.1vw, 11.5px);
+      font-weight: 700;
+      letter-spacing: clamp(0.5px, 0.15vw, 1px);
+      color: #8c6a2d;
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin: 0 0 2px 0;
+    }
+
+    .event-card-title .title-sub {
+      display: block;
+      font-size: 0.85em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-top: 1px;
+    }
+
+    .event-card-date {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(7.8px, 1.8vw, 9.8px);
+      font-weight: 600;
+      color: #2b1f13;
+      line-height: 1.15;
+      margin: 0 0 1px 0;
+      white-space: nowrap;
+    }
+
+    .event-card-hijri {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(6.8px, 1.6vw, 8.5px);
+      font-style: italic;
+      font-weight: 500;
+      color: #8c6a2d;
+      line-height: 1.1;
+      margin: 0 0 2px 0;
+      white-space: nowrap;
+    }
+
+    .event-card-venue {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(7.2px, 1.7vw, 9px);
+      font-weight: 600;
+      color: #5a4636;
+      line-height: 1.15;
+      margin: 0 0 2px 0;
+      white-space: nowrap;
+    }
+
+    .event-card-schedule {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(7.2px, 1.7vw, 9px);
+      font-weight: 600;
+      color: #7a5a22;
+      line-height: 1.15;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
     }
 
     /* SECTION 6: GALLERY SECTION (Immediately after Events, 90% Collage Width) */
@@ -803,7 +1137,7 @@
     .venue-section {
       position: relative;
       width: 100%;
-      padding: clamp(24px, 5vw, 36px) var(--mobile-padding) 0 var(--mobile-padding);
+      padding: clamp(24px, 5vw, 36px) var(--mobile-padding) clamp(24px, 5vw, 36px) var(--mobile-padding);
       background: transparent;
       box-sizing: border-box;
     }
@@ -956,37 +1290,6 @@
     .venue-toggle-btn:hover {
       background: linear-gradient(135deg, #d4b670, #a9833c);
       transform: translateY(-1px);
-    }
-
-    /* SECTION 8: VENUE ADDITION IMAGE SECTION (Seamlessly attached 0px below Address Card) */
-    .venue-addition-section {
-      position: relative;
-      width: 100%;
-      padding: 0 var(--mobile-padding) clamp(24px, 5vw, 36px) var(--mobile-padding);
-      background: transparent;
-      box-sizing: border-box;
-    }
-
-    .venue-addition-container {
-      position: relative;
-      width: 100%;
-      margin: 0 auto;
-      text-align: center;
-      box-sizing: border-box;
-    }
-
-    .venue-addition-image {
-      width: 90%;
-      max-width: 340px;
-      height: auto;
-      display: block;
-      margin: 0 auto;
-      border-radius: 0;
-      box-shadow: none;
-      object-fit: contain;
-      pointer-events: none;
-      -webkit-mask-image: radial-gradient(ellipse 94% 92% at center, rgba(0, 0, 0, 1) 72%, rgba(0, 0, 0, 0) 99%);
-      mask-image: radial-gradient(ellipse 94% 92% at center, rgba(0, 0, 0, 1) 72%, rgba(0, 0, 0, 0) 99%);
     }
 
     /* SECTION 9: COMPACT COUNTDOWN SECTION (Immediately after Venue Addition) */
@@ -1349,7 +1652,13 @@
         <div class="hero-overlay"></div>
 
         <!-- Layer 3: Hero Content -->
-        <div class="hero-content"></div>
+        <div class="hero-content">
+          <div class="hero-welcome-message">
+            <p class="hero-welcome-intro">Together with their families,</p>
+            <h1 class="hero-couple-names">Aziz &amp; Zainab</h1>
+            <p class="hero-welcome-invitation">warmly invite you to celebrate<br>their wedding.</p>
+          </div>
+        </div>
 
         <!-- Layer 4: UI / Decorations Layer -->
         <div class="hero-decorations">
@@ -1384,14 +1693,25 @@
             loading="lazy"
           />
 
-          <!-- Content Layer Above Artwork (Empty for now) -->
+          <!-- Content Layer Above Artwork -->
           <div class="invitation-card-content-layer" id="invitationCardContentLayer">
-            <!-- Future invitation content will be placed here -->
+            <div class="invitation-card-message-box">
+              <p class="invitation-arabic-heading" dir="rtl" lang="ar">&#x0628;&#x0650;&#x0633;&#x0652;&#x0645;&#x0650; &#x0671;&#x0644;&#x0644;&#x0654;&#x0670;&#x0647;&#x0650; &#x0671;&#x0644;&#x0631;&#x0657;&#x064E;&#x062d;&#x0652;&#x0645;&#x064E;&#x0670;&#x0646;&#x0650; &#x0671;&#x0644;&#x0631;&#x0657;&#x064E;&#x062d;&#x0650;&#x064a;&#x0645;&#x0650;</p>
+              <div class="invitation-message-ornament">&#x2726; &nbsp; &#x2726; &nbsp; &#x2726;</div>
+              <p class="invitation-message-text">
+                With hearts full of joy,<br>
+                we invite you to join us<br>
+                in celebrating the beautiful union<br>
+                of <span class="invitation-couple-highlight">Aziz &amp; Zainab</span><br>
+                and the beginning of their journey together.
+              </p>
+              <div class="invitation-message-ornament">&#x2726; &nbsp; &#x2726; &nbsp; &#x2726;</div>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- SECTION 3: BRIDE & GROOM SECTION (Clickable Naruto & Hinata Frame Overlays) -->
+      <!-- SECTION 3: BRIDE & GROOM SECTION (Clickable Aziz & Zainab Frame Overlays) -->
       <section id="coupleSection" class="couple-section reveal-on-scroll" aria-label="The Couple">
         <div class="couple-artwork-wrapper" id="coupleArtworkWrapper">
           <!-- Core Background Artwork Image -->
@@ -1402,38 +1722,48 @@
             loading="lazy"
           />
 
-          <!-- Left Portrait Frame Overlay (Naruto - Groom, Clickable) -->
+          <!-- Left Portrait Frame Overlay (Aziz Sidhhpuri - Groom, Clickable) -->
           <div 
             class="couple-frame-overlay frame-left clickable-photo"
             data-src="./images/naruto.jpg"
-            data-alt="Naruto - Groom"
+            data-alt="AZIZ SIDHHPURI"
             role="button"
             tabindex="0"
-            aria-label="View photo: Naruto - Groom"
+            aria-label="View photo: AZIZ SIDHHPURI"
           >
             <img
               src="./images/naruto.jpg"
-              alt="Naruto - Groom"
-              class="frame-photo"
+              alt="AZIZ SIDHHPURI"
+              class="frame-photo frame-photo-groom"
               loading="lazy"
             />
           </div>
 
-          <!-- Right Portrait Frame Overlay (Hinata - Bride, Clickable) -->
+          <!-- Right Portrait Frame Overlay (Zainab Sadabarwala - Bride, Clickable) -->
           <div 
             class="couple-frame-overlay frame-right clickable-photo"
             data-src="./images/hinata.jpg"
-            data-alt="Hinata - Bride"
+            data-alt="ZAINAB SADABARWALA"
             role="button"
             tabindex="0"
-            aria-label="View photo: Hinata - Bride"
+            aria-label="View photo: ZAINAB SADABARWALA"
           >
             <img
               src="./images/hinata.jpg"
-              alt="Hinata - Bride"
-              class="frame-photo"
+              alt="ZAINAB SADABARWALA"
+              class="frame-photo frame-photo-bride"
               loading="lazy"
             />
+          </div>
+
+          <!-- Names Displayed Below Respective Images (Two Lines in Flowing Wedding Calligraphy) -->
+          <div class="couple-name-label name-left">
+            <span class="couple-name-first">Aziz</span>
+            <span class="couple-name-last">Sidhhpuri</span>
+          </div>
+          <div class="couple-name-label name-right">
+            <span class="couple-name-first">Zainab</span>
+            <span class="couple-name-last">Sadabarwala</span>
           </div>
         </div>
       </section>
@@ -1458,12 +1788,12 @@
               <div class="revealed-date-card" id="revealedDateCard" aria-hidden="true">
                 <div class="date-card-border" aria-hidden="true"></div>
                 <div class="date-col">
-                  <span class="date-val">13</span>
+                  <span class="date-val">23</span>
                   <span class="date-lbl">DAY</span>
                 </div>
                 <div class="date-col-divider"></div>
                 <div class="date-col">
-                  <span class="date-val">DEC</span>
+                  <span class="date-val date-val-month">OCTOBER</span>
                   <span class="date-lbl">MONTH</span>
                 </div>
                 <div class="date-col-divider"></div>
@@ -1507,34 +1837,99 @@
               loading="lazy"
             />
 
-            <!-- Tap Hotspots overlaying event-card.png frames (+10px right shift) -->
+            <!-- Tap Hotspots overlaying event-card.png frames -->
             <div class="events-hotspots-container">
-              <div class="event-tap-hotspot hotspot-1 hotspot-left" data-event-id="1" style="top: 18.5%;" role="button" tabindex="0" aria-label="Toggle details for Mehndi"></div>
-              <div class="event-tap-hotspot hotspot-2 hotspot-right" data-event-id="2" style="top: 41.5%;" role="button" tabindex="0" aria-label="Toggle details for Nikah"></div>
-              <div class="event-tap-hotspot hotspot-3 hotspot-left" data-event-id="3" style="top: 64.5%;" role="button" tabindex="0" aria-label="Toggle details for Reception"></div>
-              <div class="event-tap-hotspot hotspot-4 hotspot-right" data-event-id="4" style="top: 84.5%;" role="button" tabindex="0" aria-label="Toggle details for Walima"></div>
+              <!-- Event 1 (LEFT) -->
+              <div class="event-tap-hotspot hotspot-1" data-event-id="1" role="button" tabindex="0" aria-label="Toggle details for Mehndi">
+                <div class="event-frame-inner">
+                  <span class="event-frame-title">MEHNDI</span>
+                  <span class="event-frame-date">21st October (Wednesday)</span>
+                </div>
+              </div>
+
+              <!-- Event 2 (RIGHT) -->
+              <div class="event-tap-hotspot hotspot-2" data-event-id="2" role="button" tabindex="0" aria-label="Toggle details for Mosalu">
+                <div class="event-frame-inner">
+                  <span class="event-frame-title">MOSALU</span>
+                  <span class="event-frame-date">22nd October (Thursday)</span>
+                </div>
+              </div>
+
+              <!-- Event 3 (LEFT) -->
+              <div class="event-tap-hotspot hotspot-3" data-event-id="3" role="button" tabindex="0" aria-label="Toggle details for Zafaf">
+                <div class="event-frame-inner">
+                  <span class="event-frame-title">ZAFAF</span>
+                  <span class="event-frame-date">23rd October (Friday)</span>
+                </div>
+              </div>
+
+              <!-- Event 4 (RIGHT) -->
+              <div class="event-tap-hotspot hotspot-4" data-event-id="4" role="button" tabindex="0" aria-label="Toggle details for Invitee (Nikha Lunch)">
+                <div class="event-frame-inner">
+                  <span class="event-frame-title">INVITEE<span class="title-sub">(NIKHA LUNCH)</span></span>
+                  <span class="event-frame-date">24th October (Saturday)</span>
+                </div>
+              </div>
             </div>
 
-            <!-- Opposite Details Cards Container (EMPTY CARDS, Event 4 UP at 84.5%) -->
+            <!-- Details Cards Container (Initial state: ALL closed behind corresponding front cards) -->
             <div class="events-details-container">
-              <!-- Event 1 (LEFT) -> Empty Details Card 1 (RIGHT) -->
-              <div id="eventDetailsCard-1" class="event-details-card details-opposite-right" style="top: 18.5%;" data-details-id="1" aria-hidden="true">
+              <!-- Event 1 (LEFT) -> Details Card 1 (Slides to RIGHT) -->
+              <div id="eventDetailsCard-1" class="event-details-card" data-details-id="1" aria-hidden="true">
                 <div class="details-hairline-border" aria-hidden="true"></div>
+                <div class="event-card-content">
+                  <h4 class="event-card-title">MEHNDI</h4>
+                  <p class="event-card-date">21st October (Wednesday)</p>
+                  <p class="event-card-hijri">11th Jamadil-Ula 1448</p>
+                  <p class="event-card-venue">MJ Culture, Ukardi Road</p>
+                  <div class="event-card-schedule">
+                    <span>Mehndi at 09:00 AM</span>
+                    <span>Lunch at 01:00 PM</span>
+                  </div>
+                </div>
               </div>
 
-              <!-- Event 2 (RIGHT) -> Empty Details Card 2 (LEFT) -->
-              <div id="eventDetailsCard-2" class="event-details-card details-opposite-left" style="top: 41.5%;" data-details-id="2" aria-hidden="true">
+              <!-- Event 2 (RIGHT) -> Details Card 2 (Slides to LEFT) -->
+              <div id="eventDetailsCard-2" class="event-details-card" data-details-id="2" aria-hidden="true">
                 <div class="details-hairline-border" aria-hidden="true"></div>
+                <div class="event-card-content">
+                  <h4 class="event-card-title">MOSALU</h4>
+                  <p class="event-card-date">22nd October (Thursday)</p>
+                  <p class="event-card-hijri">12th Jamadil-Ula 1448</p>
+                  <p class="event-card-venue">MJ Culture, Ukardi Road</p>
+                  <div class="event-card-schedule">
+                    <span>Mosalu at 05:00 PM</span>
+                    <span>Dinner at 08:00 PM</span>
+                  </div>
+                </div>
               </div>
 
-              <!-- Event 3 (LEFT) -> Empty Details Card 3 (RIGHT) -->
-              <div id="eventDetailsCard-3" class="event-details-card details-opposite-right" style="top: 64.5%;" data-details-id="3" aria-hidden="true">
+              <!-- Event 3 (LEFT) -> Details Card 3 (Slides to RIGHT) -->
+              <div id="eventDetailsCard-3" class="event-details-card" data-details-id="3" aria-hidden="true">
                 <div class="details-hairline-border" aria-hidden="true"></div>
+                <div class="event-card-content">
+                  <h4 class="event-card-title">ZAFAF</h4>
+                  <p class="event-card-date">23rd October (Friday)</p>
+                  <p class="event-card-hijri">13th Jamadil-Ula 1448</p>
+                  <p class="event-card-venue">Zainab Hall, Dahod</p>
+                  <div class="event-card-schedule">
+                    <span>1:15 PM onwards</span>
+                  </div>
+                </div>
               </div>
 
-              <!-- Event 4 (RIGHT) -> Empty Details Card 4 (LEFT) -->
-              <div id="eventDetailsCard-4" class="event-details-card details-opposite-left" style="top: 84.5%;" data-details-id="4" aria-hidden="true">
+              <!-- Event 4 (RIGHT) -> Details Card 4 (Slides to LEFT) -->
+              <div id="eventDetailsCard-4" class="event-details-card" data-details-id="4" aria-hidden="true">
                 <div class="details-hairline-border" aria-hidden="true"></div>
+                <div class="event-card-content">
+                  <h4 class="event-card-title">INVITEE<span class="title-sub">(NIKHA LUNCH)</span></h4>
+                  <p class="event-card-date">24th October (Saturday)</p>
+                  <p class="event-card-hijri">14th Jamadil-Ula 1448</p>
+                  <p class="event-card-venue">Zainab Hall</p>
+                  <div class="event-card-schedule">
+                    <span>Lunch at 01:15 PM</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1634,18 +2029,6 @@
               </div>
             </div>
 
-          </div>
-        </section>
-
-        <!-- SECTION 8: VENUE ADDITION IMAGE SECTION (Seamlessly attached 0px below Address Card) -->
-        <section id="venueAdditionSection" class="venue-addition-section reveal-on-scroll" aria-label="Venue Highlight">
-          <div class="venue-addition-container">
-            <img
-              src="./images/addition.png"
-              alt="Venue Location Highlight"
-              class="venue-addition-image"
-              loading="lazy"
-            />
           </div>
         </section>
 
@@ -2123,8 +2506,8 @@
 
         if (!activeLayer || !marriedLayer || !daysEl || !hoursEl || !minutesEl || !secondsEl) return;
 
-        // Target Date: December 13, 2026 20:30:00 GMT+0530 (IST)
-        const targetTimestamp = new Date('2026-12-13T20:30:00+05:30').getTime();
+        // Target Date: October 23, 2026 13:15:00 GMT+0530 (IST)
+        const targetTimestamp = new Date('2026-10-23T13:15:00+05:30').getTime();
 
         function updateTimer() {
           const now = Date.now();
@@ -2155,38 +2538,153 @@
         const timerInterval = setInterval(updateTimer, 1000);
       }
 
-      // Events Interaction Handler with MULTI-OPEN State Support
+      // Events Interaction Handler with Automatic Sequential Open & Close
       function initEventsInteraction() {
-        // Independent open state Set (allows multiple details cards open at once)
         const openEvents = new Set();
-
         const hotspots = document.querySelectorAll('.event-tap-hotspot');
         const detailsCards = document.querySelectorAll('.event-details-card');
+        const eventsArtwork = document.getElementById('eventsArtworkWrapper') || document.getElementById('eventsSection');
 
-        function toggleEvent(id) {
-          const targetId = parseInt(id, 10);
+        let pendingTimers = [];
+        let isEventsInView = false;
 
-          if (openEvents.has(targetId)) {
-            // If already open -> close ONLY this card
-            openEvents.delete(targetId);
-          } else {
-            // If closed -> open this card (KEEP ALL OTHER OPEN CARDS OPEN)
+        function clearPendingTimers() {
+          pendingTimers.forEach(t => clearTimeout(t));
+          pendingTimers = [];
+        }
+
+        // Enforce all cards strictly closed initially
+        openEvents.clear();
+        detailsCards.forEach(card => {
+          card.classList.remove('visible-details');
+          card.setAttribute('aria-hidden', 'true');
+        });
+
+        function setCardState(targetId, isOpen) {
+          if (isOpen) {
             openEvents.add(targetId);
+          } else {
+            openEvents.delete(targetId);
           }
-
-          // Update each card state independently
-          detailsCards.forEach(card => {
-            const cardId = parseInt(card.getAttribute('data-details-id'), 10);
-            if (openEvents.has(cardId)) {
+          const card = document.getElementById('eventDetailsCard-' + targetId);
+          if (card) {
+            if (isOpen) {
               card.classList.add('visible-details');
               card.setAttribute('aria-hidden', 'false');
             } else {
               card.classList.remove('visible-details');
               card.setAttribute('aria-hidden', 'true');
             }
-          });
+          }
         }
 
+        function toggleEvent(id) {
+          const targetId = parseInt(id, 10);
+          // Manual user tap cancels pending auto animations so they don't fight
+          clearPendingTimers();
+
+          if (openEvents.has(targetId)) {
+            setCardState(targetId, false);
+          } else {
+            setCardState(targetId, true);
+          }
+        }
+
+        // Automatic opening sequence:
+        // Wait strictly 2.5 seconds (cards remain 100% closed)
+        // -> Card 1 opens
+        // -> 0.5s delay -> Card 2 opens
+        // -> 0.5s delay -> Card 3 opens
+        // -> 0.5s delay -> Card 4 opens
+        function startAutoOpenSequence() {
+          clearPendingTimers();
+
+          // Ensure all cards are closed at start of 2.5s waiting period
+          [1, 2, 3, 4].forEach(id => setCardState(id, false));
+
+          const initialTimer = setTimeout(() => {
+            if (!isEventsInView) return;
+
+            // Card 1 opens at 2.5s
+            setCardState(1, true);
+
+            // Card 2 opens after 0.5s
+            const t1 = setTimeout(() => {
+              if (!isEventsInView) return;
+              setCardState(2, true);
+
+              // Card 3 opens after 0.5s
+              const t2 = setTimeout(() => {
+                if (!isEventsInView) return;
+                setCardState(3, true);
+
+                // Card 4 opens after 0.5s
+                const t3 = setTimeout(() => {
+                  if (!isEventsInView) return;
+                  setCardState(4, true);
+                }, 500);
+                pendingTimers.push(t3);
+              }, 500);
+              pendingTimers.push(t2);
+            }, 500);
+            pendingTimers.push(t1);
+          }, 2500);
+
+          pendingTimers.push(initialTimer);
+        }
+
+        // Automatic reverse closing sequence on scroll away:
+        // Card 4 closes -> 0.5s delay -> Card 3 closes -> 0.5s delay -> Card 2 closes -> 0.5s delay -> Card 1 closes
+        function startAutoCloseSequence() {
+          clearPendingTimers();
+
+          // Close Card 4
+          setCardState(4, false);
+
+          // Card 3 closes after 0.5s
+          const t1 = setTimeout(() => {
+            if (isEventsInView) return;
+            setCardState(3, false);
+
+            // Card 2 closes after 0.5s
+            const t2 = setTimeout(() => {
+              if (isEventsInView) return;
+              setCardState(2, false);
+
+              // Card 1 closes after 0.5s
+              const t3 = setTimeout(() => {
+                if (isEventsInView) return;
+                setCardState(1, false);
+              }, 500);
+              pendingTimers.push(t3);
+            }, 500);
+            pendingTimers.push(t2);
+          }, 500);
+          pendingTimers.push(t1);
+        }
+
+        // IntersectionObserver on eventsArtworkWrapper for precise card-visibility detection
+        if (eventsArtwork && 'IntersectionObserver' in window) {
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting && entry.intersectionRatio >= 0.3) {
+                if (!isEventsInView) {
+                  isEventsInView = true;
+                  startAutoOpenSequence();
+                }
+              } else if (!entry.isIntersecting || entry.intersectionRatio < 0.12) {
+                if (isEventsInView) {
+                  isEventsInView = false;
+                  startAutoCloseSequence();
+                }
+              }
+            });
+          }, { threshold: [0, 0.12, 0.3, 0.5] });
+
+          observer.observe(eventsArtwork);
+        }
+
+        // Manual hotspot click/keyboard triggers
         hotspots.forEach(hs => {
           hs.addEventListener('click', function(e) {
             e.stopPropagation();
@@ -2200,6 +2698,15 @@
               const id = hs.getAttribute('data-event-id');
               toggleEvent(id);
             }
+          });
+        });
+
+        // Manual details card click triggers (clicking open card closes it)
+        detailsCards.forEach(dc => {
+          dc.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const id = dc.getAttribute('data-details-id');
+            toggleEvent(id);
           });
         });
       }
